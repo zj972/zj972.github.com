@@ -558,9 +558,7 @@
       
         
           
-          子模块使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。
-问题初探在搭建Blog的过程中，有使用到Hexo的主题next，在提交代码到Git上时，发现next文件无法commit：
-$ git statusOn branch masterYour branch is up-to-date with 'origin/master'.Changes not staged for commit:  (use "git add &lt;fil
+          子模块使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -709,13 +707,7 @@ $ git statusOn branch masterYour branch is up-to-date with 'origin/master'.Chang
         
           
           前情提要自己的服务器到期了，然后打算在GitHub上面搭个个人博客玩玩，最后选择了Hexo。搭建起来后，用自己的域名绑定了GitHub Page。
-但是遇到一个问题：每次hexo d -g之后，访问www.yangshaobo.cn就变成了404。DNS解析是正常的，打开项目的setting，却发现Custom domain的值为空。
-
-
-发现问题原来当你添加个人域名时，GitHub会向你的项目仓库添加一个文件CNAME，里面包含了一个域名：
-www.yangshaobo.cn
-而每次我使用通过Hexo部署时都会自动提交public文件夹到仓库里，配置信息如下：
-deploy:  type: 
+但是遇到一个问题：每次hexo d -g之后，访问w
           ...
           <!--noindex-->
           <div class="post-button text-center">
