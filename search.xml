@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Cookie安全探索]]></title>
+    <url>%2F2018%2F03%2F14%2FCookie%E5%AE%89%E5%85%A8%E6%8E%A2%E7%B4%A2%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Cookie</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Git子模块-初遇]]></title>
     <url>%2F2018%2F03%2F05%2FGit%E5%AD%90%E6%A8%A1%E5%9D%97-%E5%88%9D%E9%81%87%2F</url>
     <content type="text"><![CDATA[子模块使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。 问题初探在搭建Blog的过程中，有使用到Hexo的主题next，在提交代码到Git上时，发现next文件无法commit： $ git statusOn branch masterYour branch is up-to-date with 'origin/master'.Changes not staged for commit: (use "git add &lt;file&gt;..." to update what will be committed) (use "git checkout -- &lt;file&gt;..." to discard changes in working directory) (commit or discard the untracked or modified content in submodules) modified: themes/next (modified content)no changes added to commit (use "git add" and/or "git commit -a") 看了一下网上的解释，原来是因为我是clone的代码，next文件下有.git的存在，只需要删除就可以。删除虽然可以解决问题，但这样就无法更新next了，如果下载后手动合并自己的修改又过于麻烦。而且由于我是深度修改了next，很多文件都进行了修改，所以无法像issues那样，提取个人的配置，不对next进行修改。 子模块使用这时候看到有人提到了fork+submodule的方法，大概意思就是将next项目fork到自己的GitHub上，然后clone下来并作为子模块进行管理，这样既可以修改next并上传保存，也可以update作者的代码。 操作步骤先clone并建立子模块 $ git submodule add https://github.com/zj972/hexo-theme-next themes/next 进行完这一步操作就会clone仓库代码到对应路径，同时还会在根目录下生成一个.gitmodules文件，该配置文件保存着仓库链接和本地目录的映射关系： $ cat .gitmodules[submodule "themes/next"] path = themes/next url = https://github.com/zj972/hexo-theme-next 然后就可以进行子模块的修改和操作了，作为刚用上这个命令不太熟的，其实可以直接进入到子仓库目录下进行git操作。 一下是几条操作的示例： 查看详细的差异信息 $ git diff --cached --submodule 克隆包含有子模块的项目 $ git clone git@github.com:zj972/blog.git 这个时候子模块目录是空的，需要通过submodule进行更新 $ git submodule init$ git submodule update 其他的子模块操作还在尝试中… END]]></content>
@@ -13,7 +24,7 @@
   </entry>
   <entry>
     <title><![CDATA[GitHub Page绑定个人域名]]></title>
-    <url>%2F2018%2F03%2F02%2FGitHub%20Page%E7%BB%91%E5%AE%9A%E4%B8%AA%E4%BA%BA%E5%9F%9F%E5%90%8D%2F</url>
+    <url>%2F2018%2F03%2F02%2FGitHub_Page%E7%BB%91%E5%AE%9A%E4%B8%AA%E4%BA%BA%E5%9F%9F%E5%90%8D%2F</url>
     <content type="text"><![CDATA[前情提要自己的服务器到期了，然后打算在GitHub上面搭个个人博客玩玩，最后选择了Hexo。搭建起来后，用自己的域名绑定了GitHub Page。 但是遇到一个问题：每次hexo d -g之后，访问www.yangshaobo.cn就变成了404。DNS解析是正常的，打开项目的setting，却发现Custom domain的值为空。 发现问题原来当你添加个人域名时，GitHub会向你的项目仓库添加一个文件CNAME，里面包含了一个域名： www.yangshaobo.cn 而每次我使用通过Hexo部署时都会自动提交public文件夹到仓库里，配置信息如下： deploy: type: git repository: git@github.com:zj972/zj972.github.com.git branch: master 这样就把CNAME文件自动覆盖了。 解决方案解决办法就是把CNAME文件添加到source文件夹里，这样每次部署就不会覆盖掉了。]]></content>
       <categories>
         <category>编程人生</category>
