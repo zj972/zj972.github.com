@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Hexo中Next主题首页不显示全文]]></title>
+    <url>%2F2018%2F03%2F14%2FHexo%E4%B8%ADNext%E4%B8%BB%E9%A2%98%E9%A6%96%E9%A1%B5%E4%B8%8D%E6%98%BE%E7%A4%BA%E5%85%A8%E6%96%87%2F</url>
+    <content type="text"><![CDATA[使用Next主题时，会发现它在首页默认是会显示全文的，这就很不方便浏览文章列表。 解决办法找到主题配置文件```yml# Automatically Excerpt. Not recommend.# Please use &lt;!-- more --&gt; in the post to control excerpt accurately.auto_excerpt: enable: fales length: 150 将enable的值修改为true，而length是指显示的字数，然后重新部署就可以了~ Tips：使用预览会忽略文章的格式，直接显示为正文文本。]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>hexo-theme</tag>
+        <tag>theme-next</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Cookie安全探索]]></title>
     <url>%2F2018%2F03%2F14%2FCookie%E5%AE%89%E5%85%A8%E6%8E%A2%E7%B4%A2%2F</url>
     <content type="text"></content>
