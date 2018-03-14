@@ -103,18 +103,18 @@
   <meta name="keywords" content="Git," />
 
 
-<meta name="description" content="子模块使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。 问题初探在搭建Blog的过程中，有使用到Hexo的主题next，在提交代码到Git上时，发现next文件无法commit： $ git statusOn branch master">
+<meta name="description" content="使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。 问题初探在搭建Blog的过程中，有使用到Hexo的主题next，在提交代码到Git上时，发现next文件无法commit： $ git statusOn branch masterYou">
 <meta name="keywords" content="Git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git子模块-初遇">
 <meta property="og:url" content="http://www.yangshaobo.cn/2018/03/05/Git子模块-初遇/index.html">
 <meta property="og:site_name" content="Sarbo&#39;s blog">
-<meta property="og:description" content="子模块使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。 问题初探在搭建Blog的过程中，有使用到Hexo的主题next，在提交代码到Git上时，发现next文件无法commit： $ git statusOn branch master">
+<meta property="og:description" content="使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。 问题初探在搭建Blog的过程中，有使用到Hexo的主题next，在提交代码到Git上时，发现next文件无法commit： $ git statusOn branch masterYou">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-06T07:21:14.553Z">
+<meta property="og:updated_time" content="2018-03-14T09:55:00.022Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git子模块-初遇">
-<meta name="twitter:description" content="子模块使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。 问题初探在搭建Blog的过程中，有使用到Hexo的主题next，在提交代码到Git上时，发现next文件无法commit： $ git statusOn branch master">
+<meta name="twitter:description" content="使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。 问题初探在搭建Blog的过程中，有使用到Hexo的主题next，在提交代码到Git上时，发现next文件无法commit： $ git statusOn branch masterYou">
 
 
 
@@ -415,7 +415,7 @@
       
 
       
-        <h2 id="子模块"><a href="#子模块" class="headerlink" title="子模块"></a>子模块</h2><p>使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。</p>
+        <p>使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。</p>
 <h2 id="问题初探"><a href="#问题初探" class="headerlink" title="问题初探"></a>问题初探</h2><p>在搭建Blog的过程中，有使用到Hexo的主题next，在提交代码到Git上时，发现next文件无法commit：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Your branch is up-to-date with <span class="string">'origin/master'</span>.</span><br><span class="line">Changes not staged <span class="keyword">for</span> commit:</span><br><span class="line">  (use <span class="string">"git add &lt;file&gt;..."</span> to update what will be committed)</span><br><span class="line">  (use <span class="string">"git checkout -- &lt;file&gt;..."</span> to discard changes <span class="keyword">in</span> working directory)</span><br><span class="line">  (commit or discard the untracked or modified content <span class="keyword">in</span> submodules)</span><br><span class="line"></span><br><span class="line">    modified:   themes/next (modified content)</span><br><span class="line"></span><br><span class="line">no changes added to commit (use <span class="string">"git add"</span> and/or <span class="string">"git commit -a"</span>)</span><br></pre></td></tr></table></figure>
 <p>看了一下网上的解释，原来是因为我是clone的代码，next文件下有.git的存在，只需要删除就可以。删除虽然可以解决问题，但这样就无法更新next了，如果下载后手动合并自己的修改又过于麻烦。而且由于我是深度修改了next，很多文件都进行了修改，所以无法像<a href="https://github.com/iissnan/hexo-theme-next/issues/328" target="_blank" rel="noopener">issues</a>那样，提取个人的配置，不对next进行修改。</p>
@@ -701,7 +701,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#子模块"><span class="nav-number">1.</span> <span class="nav-text">子模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题初探"><span class="nav-number">2.</span> <span class="nav-text">问题初探</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子模块使用"><span class="nav-number">3.</span> <span class="nav-text">子模块使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#操作步骤"><span class="nav-number">3.1.</span> <span class="nav-text">操作步骤</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题初探"><span class="nav-number">1.</span> <span class="nav-text">问题初探</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子模块使用"><span class="nav-number">2.</span> <span class="nav-text">子模块使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#操作步骤"><span class="nav-number">2.1.</span> <span class="nav-text">操作步骤</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -767,7 +767,7 @@ var jiathis_config={
       <!-- <i class="fa fa-font"></i> -->
       | 总字数：
       <span class="busuanzi-value" id="busuanzi_value_site_uv">
-        <span class="post-count">849</span>
+        <span class="post-count">842</span>
       </span>
     </span>
   
