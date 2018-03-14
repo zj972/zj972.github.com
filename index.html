@@ -410,8 +410,15 @@
       
         
           
-            
           
+          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/14/Cookie安全探索/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -551,27 +558,17 @@
       
         
           
-            <h2 id="子模块"><a href="#子模块" class="headerlink" title="子模块"></a>子模块</h2><p>使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。</p>
-<h2 id="问题初探"><a href="#问题初探" class="headerlink" title="问题初探"></a>问题初探</h2><p>在搭建Blog的过程中，有使用到Hexo的主题next，在提交代码到Git上时，发现next文件无法commit：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git status</span><br><span class="line">On branch master</span><br><span class="line">Your branch is up-to-date with <span class="string">'origin/master'</span>.</span><br><span class="line">Changes not staged <span class="keyword">for</span> commit:</span><br><span class="line">  (use <span class="string">"git add &lt;file&gt;..."</span> to update what will be committed)</span><br><span class="line">  (use <span class="string">"git checkout -- &lt;file&gt;..."</span> to discard changes <span class="keyword">in</span> working directory)</span><br><span class="line">  (commit or discard the untracked or modified content <span class="keyword">in</span> submodules)</span><br><span class="line"></span><br><span class="line">    modified:   themes/next (modified content)</span><br><span class="line"></span><br><span class="line">no changes added to commit (use <span class="string">"git add"</span> and/or <span class="string">"git commit -a"</span>)</span><br></pre></td></tr></table></figure>
-<p>看了一下网上的解释，原来是因为我是clone的代码，next文件下有.git的存在，只需要删除就可以。删除虽然可以解决问题，但这样就无法更新next了，如果下载后手动合并自己的修改又过于麻烦。而且由于我是深度修改了next，很多文件都进行了修改，所以无法像<a href="https://github.com/iissnan/hexo-theme-next/issues/328" target="_blank" rel="noopener">issues</a>那样，提取个人的配置，不对next进行修改。</p>
-<h2 id="子模块使用"><a href="#子模块使用" class="headerlink" title="子模块使用"></a>子模块使用</h2><p>这时候看到有人提到了fork+submodule的方法，大概意思就是将next项目fork到自己的GitHub上，然后clone下来并作为子模块进行管理，这样既可以修改next并上传保存，也可以update作者的代码。</p>
-<h3 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h3><p>先clone并建立子模块</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git submodule add https://github.com/zj972/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<p>进行完这一步操作就会clone仓库代码到对应路径，同时还会在根目录下生成一个.gitmodules文件，该配置文件保存着仓库链接和本地目录的映射关系：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat .gitmodules</span><br><span class="line">[submodule <span class="string">"themes/next"</span>]</span><br><span class="line">    path = themes/next</span><br><span class="line">    url = https://github.com/zj972/hexo-theme-next</span><br></pre></td></tr></table></figure>
-<p>然后就可以进行子模块的修改和操作了，作为刚用上这个命令不太熟的，其实可以直接进入到子仓库目录下进行git操作。</p>
-<p>一下是几条操作的示例：</p>
-<p>查看详细的差异信息</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git diff --cached --submodule</span><br></pre></td></tr></table></figure>
-<p>克隆包含有子模块的项目</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git@github.com:zj972/blog.git</span><br></pre></td></tr></table></figure>
-<p>这个时候子模块目录是空的，需要通过submodule进行更新</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git submodule init</span><br><span class="line">$ git submodule update</span><br></pre></td></tr></table></figure>
-<p>其他的子模块操作还在尝试中…</p>
-<p>END</p>
-
-          
+          子模块使用Git已经有好几年了，但是从来没有使用过Git的子模块，因为大多数项目都是独立的，项目之间并没有包含关系。所谓子模块，也就是将一个Git仓库作为另一个Git仓库的子目录，然后在大的仓库里进行模块化管理子仓库。
+问题初探在搭建Blog的过程中，有使用到Hexo的主题next，在提交代码到Git上时，发现next文件无法commit：
+$ git statusOn branch masterYour branch is up-to-date with 'origin/master'.Changes not staged for commit:  (use "git add &lt;fil
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/05/Git子模块-初遇/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -711,18 +708,22 @@
       
         
           
-            <h2 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h2><p>自己的服务器到期了，然后打算在GitHub上面搭个个人博客玩玩，最后选择了Hexo。搭建起来后，用自己的域名绑定了GitHub Page。</p>
-<p>但是遇到一个问题：每次<code>hexo d -g</code>之后，访问<code>www.yangshaobo.cn</code>就变成了404。DNS解析是正常的，打开项目的setting，却发现<code>Custom domain</code>的值为空。</p>
-<div align="center"><br><img src="http://img.yangshaobo.cn/404.png" alt="404"><br></div>
+          前情提要自己的服务器到期了，然后打算在GitHub上面搭个个人博客玩玩，最后选择了Hexo。搭建起来后，用自己的域名绑定了GitHub Page。
+但是遇到一个问题：每次hexo d -g之后，访问www.yangshaobo.cn就变成了404。DNS解析是正常的，打开项目的setting，却发现Custom domain的值为空。
 
-<h2 id="发现问题"><a href="#发现问题" class="headerlink" title="发现问题"></a>发现问题</h2><p>原来当你添加个人域名时，GitHub会向你的项目仓库添加一个文件<code>CNAME</code>，里面包含了一个域名：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">www.yangshaobo.cn</span><br></pre></td></tr></table></figure>
-<p>而每次我使用通过Hexo部署时都会自动提交<code>public</code>文件夹到仓库里，配置信息如下：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repository:</span> <span class="string">git@github.com:zj972/zj972.github.com.git</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
-<p>这样就把<code>CNAME</code>文件自动覆盖了。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>解决办法就是把<code>CNAME</code>文件添加到<code>source</code>文件夹里，这样每次部署就不会覆盖掉了。</p>
 
-          
+发现问题原来当你添加个人域名时，GitHub会向你的项目仓库添加一个文件CNAME，里面包含了一个域名：
+www.yangshaobo.cn
+而每次我使用通过Hexo部署时都会自动提交public文件夹到仓库里，配置信息如下：
+deploy:  type: 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/02/GitHub_Page绑定个人域名/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
