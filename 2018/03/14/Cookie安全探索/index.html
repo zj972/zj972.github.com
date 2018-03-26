@@ -103,18 +103,18 @@
   <meta name="keywords" content="Cookie," />
 
 
-<meta name="description" content="一个爱折腾的小码农">
+<meta name="description" content="在使用前端保存数据时，我通常会使用LocalStorage，相较于Cookie，前者更方便，容量更大，而且保存时间长。但是对于后端来说，我们同样需要在前端保存一些数据并与之交互，也就是在HTTP头中携带Cookie。 Cookie的基本属性 name（名称） value（值） domain（子域） path（站点路径） expires/Max-Age（过期时间） Size（大小） http（仅HT">
 <meta name="keywords" content="Cookie">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cookie安全探索">
 <meta property="og:url" content="http://www.yangshaobo.cn/2018/03/14/Cookie安全探索/index.html">
 <meta property="og:site_name" content="Sarbo&#39;s blog">
-<meta property="og:description" content="一个爱折腾的小码农">
+<meta property="og:description" content="在使用前端保存数据时，我通常会使用LocalStorage，相较于Cookie，前者更方便，容量更大，而且保存时间长。但是对于后端来说，我们同样需要在前端保存一些数据并与之交互，也就是在HTTP头中携带Cookie。 Cookie的基本属性 name（名称） value（值） domain（子域） path（站点路径） expires/Max-Age（过期时间） Size（大小） http（仅HT">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-14T09:47:19.100Z">
+<meta property="og:updated_time" content="2018-03-26T12:07:06.107Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cookie安全探索">
-<meta name="twitter:description" content="一个爱折腾的小码农">
+<meta name="twitter:description" content="在使用前端保存数据时，我通常会使用LocalStorage，相较于Cookie，前者更方便，容量更大，而且保存时间长。但是对于后端来说，我们同样需要在前端保存一些数据并与之交互，也就是在HTTP头中携带Cookie。 Cookie的基本属性 name（名称） value（值） domain（子域） path（站点路径） expires/Max-Age（过期时间） Size（大小） http（仅HT">
 
 
 
@@ -415,7 +415,34 @@
       
 
       
-        
+        <p>在使用前端保存数据时，我通常会使用<code>LocalStorage</code>，相较于<code>Cookie</code>，前者更方便，容量更大，而且保存时间长。但是对于后端来说，我们同样需要在前端保存一些数据并与之交互，也就是在HTTP头中携带Cookie。</p>
+<h2 id="Cookie的基本属性"><a href="#Cookie的基本属性" class="headerlink" title="Cookie的基本属性"></a>Cookie的基本属性</h2><ul>
+<li>name（名称）</li>
+<li>value（值）</li>
+<li>domain（子域）</li>
+<li>path（站点路径）</li>
+<li>expires/Max-Age（过期时间）</li>
+<li>Size（大小）</li>
+<li>http（仅HTTP读取）</li>
+<li>secure（安全性）</li>
+</ul>
+<p>具体的属性用法，网上都有介绍，就不一一赘述</p>
+<h2 id="Cookie安全问题"><a href="#Cookie安全问题" class="headerlink" title="Cookie安全问题"></a>Cookie安全问题</h2><ul>
+<li>不唯一：Cookie是由三元组[name, domain, path]来确定的，是会出现重名，即不是唯一的</li>
+<li>易于获取：前面提到了Cookie是被携带在HTTP上面的，所以很容易从请求上截取到Cookie</li>
+<li>Cookie注入：容易截取的同时，Cookie也易于修改</li>
+</ul>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>基于上面的问题，我有思考过当前我所做的项目存在的安全问题，虽然只是一个内部的管理页面，有内网限制。但公司员工如果发现安全漏洞，岂不是可以攻击系统了。</p>
+<p>看了很多相关的博文，对我当前项目的Cookie进行了一些基础的防护：</p>
+<ul>
+<li>将一些较为敏感的信息作为post请求字段进行传递</li>
+<li>对系统的用户输入提交进行脚本过滤</li>
+<li>设置secure为true</li>
+<li>设置HTTPOnly属性</li>
+<li>定期自动清理一些不必要的Cookie字段</li>
+</ul>
+<p>END</p>
+
       
     </div>
 
@@ -540,8 +567,17 @@ var jiathis_config={
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -670,6 +706,22 @@ var jiathis_config={
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie的基本属性"><span class="nav-number">1.</span> <span class="nav-text">Cookie的基本属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie安全问题"><span class="nav-number">2.</span> <span class="nav-text">Cookie安全问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">3.</span> <span class="nav-text">思考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -729,7 +781,7 @@ var jiathis_config={
       <!-- <i class="fa fa-font"></i> -->
       | 总字数：
       <span class="busuanzi-value" id="busuanzi_value_site_uv">
-        <span class="post-count">956</span>
+        <span class="post-count">1.3k</span>
       </span>
     </span>
   
