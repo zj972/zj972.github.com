@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[纪念我人生的第一次转岗]]></title>
+    <url>%2F2018%2F03%2F22%2F%E5%89%8D%E7%AB%AF%E8%BD%AC%E5%90%8E%E5%8F%B0%2F</url>
+    <content type="text"><![CDATA[今天做了一个重大的决定，那就是前端转后台，从JavaScript到Golang。垫显示器的书将要永远垫着了… 虽然作抉择的时候彻夜难眠，但确实没有焦虑，而是在认真的一点一点地剖析两个方向、两个选择的结果。很多很多的因素，自己很难捋清楚，问了很多人，得到了各种建议，但最后将要做决定的时候，才发现还是要问自己才行。 入职培训我一直记得一句话叫做：“简单相信”，但真的让自己做选择时，相信别人的安排又是那么困难。 在面临一些重要决定时，我总是会想到父亲，在我眼里，父亲是一个活得很明白，生活阅历丰富的人。他的建议对我的人生轨迹有着很大的助力作用。父亲觉得年轻就是要多学多闯，要看得见远方，舍弃当下看似很难以割舍的东西，去追求长远的目标。 有人说：只有有能力的人才拥有选择权。但我认为有能力的人拥有的不是选择权，而是制造选择的能力。 END]]></content>
+      <categories>
+        <category>人生纪实</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[Hexo中Next主题首页不显示全文]]></title>
     <url>%2F2018%2F03%2F14%2FHexo%E4%B8%ADNext%E4%B8%BB%E9%A2%98%E9%A6%96%E9%A1%B5%E4%B8%8D%E6%98%BE%E7%A4%BA%E5%85%A8%E6%96%87%2F</url>
     <content type="text"><![CDATA[使用Next主题时，会发现它在首页默认是会显示全文的，这就很不方便浏览文章列表。 解决办法找到主题配置文件```yml# Automatically Excerpt. Not recommend.# Please use &lt;!-- more --&gt; in the post to control excerpt accurately.auto_excerpt: enable: fales length: 150 将enable的值修改为true，而length是指显示的字数，然后重新部署就可以了~ Tips：使用预览会忽略文章的格式，直接显示为正文文本。 END]]></content>
