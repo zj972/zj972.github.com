@@ -103,18 +103,18 @@
   <meta name="keywords" content="Golang," />
 
 
-<meta name="description" content="Emmmm…好吧，对于一个学了好几年JavaScript，而从来没有接触过后台的菜鸡，我对来吧，列举下一些常见的格式化输出...| General | ||:--------|:---|| %v | 以默认的方式打印变量的值 || %T | 打印变量的类型 || Integer | ||:--------|:---|| %+d | 带符号的整型，```fmt.Printf(&amp;quot;%+d&amp;qu">
+<meta name="description" content="Emmmm…好吧，对于一个学了好几年JavaScript，而从来没有接触过后台的菜鸡，我对printf的了解还是当年大一学C的时候了。用习惯了console，感觉printf非常别扭，只能说弱类型语言太灵活了！ 来吧，列举下一些常见的格式化输出…    General      %v 以默认的方式打印变量的值   %T 打印变量的类型       Integer      %+d 带符号的整型，2">
 <meta name="keywords" content="Golang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="fmt.Printf初学">
 <meta property="og:url" content="http://www.yangshaobo.cn/2018/03/27/fmt-Printf初学/index.html">
 <meta property="og:site_name" content="Sarbo&#39;s blog">
-<meta property="og:description" content="Emmmm…好吧，对于一个学了好几年JavaScript，而从来没有接触过后台的菜鸡，我对来吧，列举下一些常见的格式化输出...| General | ||:--------|:---|| %v | 以默认的方式打印变量的值 || %T | 打印变量的类型 || Integer | ||:--------|:---|| %+d | 带符号的整型，```fmt.Printf(&amp;quot;%+d&amp;qu">
+<meta property="og:description" content="Emmmm…好吧，对于一个学了好几年JavaScript，而从来没有接触过后台的菜鸡，我对printf的了解还是当年大一学C的时候了。用习惯了console，感觉printf非常别扭，只能说弱类型语言太灵活了！ 来吧，列举下一些常见的格式化输出…    General      %v 以默认的方式打印变量的值   %T 打印变量的类型       Integer      %+d 带符号的整型，2">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-27T12:41:45.801Z">
+<meta property="og:updated_time" content="2018-03-27T12:52:57.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fmt.Printf初学">
-<meta name="twitter:description" content="Emmmm…好吧，对于一个学了好几年JavaScript，而从来没有接触过后台的菜鸡，我对来吧，列举下一些常见的格式化输出...| General | ||:--------|:---|| %v | 以默认的方式打印变量的值 || %T | 打印变量的类型 || Integer | ||:--------|:---|| %+d | 带符号的整型，```fmt.Printf(&amp;quot;%+d&amp;qu">
+<meta name="twitter:description" content="Emmmm…好吧，对于一个学了好几年JavaScript，而从来没有接触过后台的菜鸡，我对printf的了解还是当年大一学C的时候了。用习惯了console，感觉printf非常别扭，只能说弱类型语言太灵活了！ 来吧，列举下一些常见的格式化输出…    General      %v 以默认的方式打印变量的值   %T 打印变量的类型       Integer      %+d 带符号的整型，2">
 
 
 
@@ -415,7 +415,40 @@
       
 
       
-        <p>Emmmm…好吧，对于一个学了好几年JavaScript，而从来没有接触过后台的菜鸡，我对<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">来吧，列举下一些常见的格式化输出...</span><br><span class="line"></span><br><span class="line">| General | |</span><br><span class="line">|:--------|:---|</span><br><span class="line">| %v | 以默认的方式打印变量的值 |</span><br><span class="line">| %T | 打印变量的类型 |</span><br><span class="line"></span><br><span class="line">| Integer | |</span><br><span class="line">|:--------|:---|</span><br><span class="line">| %+d | 带符号的整型，```fmt.Printf(&quot;%+d&quot;, 255)```输出```+255``` |</span><br><span class="line">| %q | 打印单引号 |</span><br><span class="line">| %o | 不带零的八进制 |</span><br><span class="line">| %#o | 带零的八进制 |</span><br><span class="line">| %x | 小写的十六进制 |</span><br><span class="line">| %X | 大写的十六进制 |</span><br><span class="line">| %#x | 带0x的十六进制 |</span><br><span class="line">| %U | 打印Unicode字符 |</span><br><span class="line">| %#U | 打印带字符的Unicode |</span><br><span class="line">| %b | 打印整型的二进制 |</span><br><span class="line"></span><br><span class="line">| Integer width | |</span><br><span class="line">|:--------|:---|</span><br><span class="line">| %5d | 表示该整型最大长度是5 |</span><br><span class="line"></span><br><span class="line">```go</span><br><span class="line">  fmt.Printf(&quot;|%5d|&quot;, 1)       //|    1|</span><br><span class="line">  fmt.Printf(&quot;|%5d|&quot;, 1234567) //|1234567|</span><br></pre></td></tr></table></figure></p>
+        <p>Emmmm…好吧，对于一个学了好几年JavaScript，而从来没有接触过后台的菜鸡，我对printf的了解还是当年大一学C的时候了。用习惯了console，感觉printf非常别扭，只能说弱类型语言太灵活了！</p>
+<p>来吧，列举下一些常见的格式化输出…</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">General</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">%v</td>
+<td style="text-align:left">以默认的方式打印变量的值</td>
+</tr>
+<tr>
+<td style="text-align:left">%T</td>
+<td style="text-align:left">打印变量的类型</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Integer</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">%+d</td>
+<td style="text-align:left">带符号的整型，<figure class="highlight plain"><figcaption><span>255)```输出```+255``` |</span></figcaption><table><tr><td class="code"><pre><span class="line">| %q | 打印单引号 |</span><br><span class="line">| %o | 不带零的八进制 |</span><br><span class="line">| %#o | 带零的八进制 |</span><br><span class="line">| %x | 小写的十六进制 |</span><br><span class="line">| %X | 大写的十六进制 |</span><br><span class="line">| %#x | 带0x的十六进制 |</span><br><span class="line">| %U | 打印Unicode字符 |</span><br><span class="line">| %#U | 打印带字符的Unicode |</span><br><span class="line">| %b | 打印整型的二进制 |</span><br><span class="line"></span><br><span class="line">| Integer width | |</span><br><span class="line">|:--------|:---|</span><br><span class="line">| %5d | 表示该整型最大长度是5 |</span><br><span class="line"></span><br><span class="line">```go</span><br><span class="line">  fmt.Printf(&quot;|%5d|&quot;, 1)       //|    1|</span><br><span class="line">  fmt.Printf(&quot;|%5d|&quot;, 1234567) //|1234567|</span><br></pre></td></tr></table></figure></td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -908,7 +941,7 @@ var jiathis_config={
       <!-- <i class="fa fa-font"></i> -->
       | 总字数：
       <span class="busuanzi-value" id="busuanzi_value_site_uv">
-        <span class="post-count">2.1k</span>
+        <span class="post-count">2.2k</span>
       </span>
     </span>
   
