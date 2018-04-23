@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Hexo常用命令使用]]></title>
+    <url>%2F2018%2F04%2F16%2FHexo%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%2F</url>
+    <content type="text"><![CDATA[好了，用了有一段时间的Hexo了，基于他强大的命令工具，可以节省很多时间与创建管理blog，所以是时候总结一哈它的常用命令了。 hexonpm install hexo -g #安装npm update hexo -g #升级hexo init #初始化 简写hexo n "我的博客" == hexo new "我的博客" #新建文章hexo p == hexo publishhexo g == hexo generate#生成hexo s == hexo server #启动服务预览hexo d == hexo deploy #部署 服务器hexo server #Hexo 会监视文件变动并自动更新，您无须重启服务器。hexo server -s #静态模式hexo server -p 5000 #更改端口hexo server -i 192.168.1.1 #自定义 IPhexo clean #清除缓存 网页正常情况下可以忽略此条命令hexo g #生成静态网页hexo d #开始部署 监视文件变动hexo generate #使用 Hexo 生成静态文件快速而且简单hexo generate --watch #监视文件变动 完成后部署hexo generate --deployhexo deploy --generatehexo deploy -ghexo server -g 草稿hexo publish [layout] &lt;title&gt; 模版hexo new "postName" #新建文章hexo new page "pageName" #新建页面hexo generate #生成静态页面至public目录hexo server #开启预览访问端口（默认端口4000，'ctrl + c'关闭server）hexo deploy #将.deploy目录部署到GitHub END]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Golang-类型转换之strconv包]]></title>
+    <url>%2F2018%2F04%2F12%2FGolang-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E4%B9%8Bstrconv%E5%8C%85%2F</url>
+    <content type="text"><![CDATA[又是一个类型转换的问题，每门语言都会踩这个坑，而且动静态语言差异还比较大，动态的不需要考虑如何转，而是需要考虑转成了什么。而go…都需要考虑了，学习一哈~ ParseBool功能：将字符串转换为布尔值 说明： func ParseBool(str string) (value bool, err error) 接受真值：1, t, T, TRUE, true, True 接受假值：0, f, F, FALSE, false, False 其它任何值都返回一个错误 用法： res, error := strconv.ParseBool(str) FormatBool功能：将布尔值转换为字符串 “true” 或 “false” 说明： func FormatBool(b bool) string 用法： str := strconv.FormatBool(0 &lt; 1) ParseFloat功能：将字符串转换为浮点数 说明： func ParseFloat(s string, bitSize int) (f float64, err error) s：要转换的字符串 bitSize：指定浮点类型（32:float32、64:float64） *如果 s 是合法的格式，而且接近一个浮点值，则返回浮点数的四舍五入值（依据 IEEE754 的四舍五入标准） *如果 s 不是合法的格式，则返回“语法错误” *如果转换结果超出 bitSize 范围，则返回“超出范围” 用法： func main() &#123; s := "0.12345678901234567890" f, err := strconv.ParseFloat(s, 32) fmt.Println(f, err) // 0.12345679104328156 fmt.Println(float32(f), err) // 0.12345679 f, err = strconv.ParseFloat(s, 64) fmt.Println(f, err) // 0.12345678901234568&#125; ParseInt功能：将字符串转换为 int 类型 说明： func ParseInt(s string, base int, bitSize int) (i int64, err error) s：要转换的字符串 base：进位制（2 进制到 36 进制） bitSize：指定整数类型（0:int、8:int8、16:int16、32:int32、64:int64） 如果 base 为 0，则根据字符串的前缀判断进位制（0x:16，0:8，其它:10） 用法： func main() &#123; fmt.Println(strconv.ParseInt("123", 10, 8)) // 123 fmt.Println(strconv.ParseInt("12345", 10, 8)) // 127 strconv.ParseInt: parsing "12345": value out of range fmt.Println(strconv.ParseInt("2147483647", 10, 0)) // 2147483647 fmt.Println(strconv.ParseInt("0xFF", 16, 0)) // 0 strconv.ParseInt: parsing "0xFF": invalid syntax fmt.Println(strconv.ParseInt("FF", 16, 0)) // 255 fmt.Println(strconv.ParseInt("0xFF", 0, 0)) // 255&#125; Atoi功能：将字符串转换为 int 类型 说明： func Atoi(s string) (i int, err error) 相当于 ParseInt(s, 10, 0) 用法： func main() &#123; fmt.Println(strconv.Atoi("2147483647")) // 2147483647 fmt.Println(strconv.Atoi("2147483648")) // 2147483647 strconv.ParseInt: parsing "2147483648": value out of range&#125; FormatFloat功能：将浮点数 f 转换为字符串值 说明： func FormatFloat(f float64, fmt byte, prec, bitSize int) string 参数： f：要转换的浮点数 fmt：格式标记（b、e、E、f、g、G） prec：精度（数字部分的长度，不包括指数部分） bitSize：指定浮点类型（32:float32、64:float64） 格式标记： ‘b’ (-ddddp±ddd，二进制指数) ‘e’ (-d.dddde±dd，十进制指数) ‘E’ (-d.ddddE±dd，十进制指数) ‘f’ (-ddd.dddd，没有指数) ‘g’ (‘e’:大指数，’f’:其它情况) ‘G’ (‘E’:大指数，’f’:其它情况) 如果格式标记为 ‘e’，’E’和’f’，则 prec 表示小数点后的数字位数 如果格式标记为 ‘g’，’G’，则 prec 表示总的数字位数（整数部分+小数部分） 用法： package mainimport ( "fmt" "strconv")func main() &#123; f := 100.12345678901234567890123456789 fmt.Println(strconv.FormatFloat(f, 'b', 5, 32)) // 13123382p-17 fmt.Println(strconv.FormatFloat(f, 'e', 5, 32)) // 1.00123e+02 fmt.Println(strconv.FormatFloat(f, 'E', 5, 32)) // 1.00123E+02 fmt.Println(strconv.FormatFloat(f, 'f', 5, 32)) // 100.12346 fmt.Println(strconv.FormatFloat(f, 'g', 5, 32)) // 100.12 fmt.Println(strconv.FormatFloat(f, 'G', 5, 32)) // 100.12 fmt.Println(strconv.FormatFloat(f, 'b', 30, 32)) // 13123382p-17 fmt.Println(strconv.FormatFloat(f, 'e', 30, 32)) // 1.001234588623046875000000000000e+02 fmt.Println(strconv.FormatFloat(f, 'E', 30, 32)) // 1.001234588623046875000000000000E+02 fmt.Println(strconv.FormatFloat(f, 'f', 30, 32)) // 100.123458862304687500000000000000 fmt.Println(strconv.FormatFloat(f, 'g', 30, 32)) // 100.1234588623046875 fmt.Println(strconv.FormatFloat(f, 'G', 30, 32)) // 100.1234588623046875&#125; 暂时只用到了这些，其他的以后用到再做补充~ To be continued!!!]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Beego-ORM使用]]></title>
+    <url>%2F2018%2F04%2F10%2FBeego-ORM%E4%BD%BF%E7%94%A8%2F</url>
+    <content type="text"><![CDATA[本打算用官方包里自带的mysql来进行数据库操作的，但为了与rpc项目统一，最后选择了Beego的ORM。看了几遍文档，这里进行一下常用功能的总结。 ORM基础配置package mainimport ( "fmt" "github.com/astaxie/beego/orm" // 必须引入mysql包 _ "github.com/go-sql-driver/mysql")type User struct &#123; Id int Age int16 Name string&#125;func init() &#123; orm.RegisterDriver("mysql", orm.DRMySQL) // 需要在init中注册定义的model orm.RegisterModel(new(User)) // 链接数据库 orm.RegisterDataBase("default", "mysql", "root:root@tcp(123.123.123.123:3306)/test?charset=utf8")&#125; 对象的 CRUD 操作 Read o := orm.NewOrm()user := User&#123;Id: 1&#125;err := o.Read(&amp;user)if err == orm.ErrNoRows &#123; fmt.Println("查询不到")&#125; else if err == orm.ErrMissPK &#123; fmt.Println("找不到主键")&#125; else &#123; fmt.Println(user.Id, user.Name)&#125; 主要的逻辑就是将一个models的结构体传入o.Read()然后返回查询到完整的一条记录。 ReadOrCreate o := orm.NewOrm()user := User&#123;Name: "slene"&#125;// 三个返回参数依次为：是否新创建的，对象 Id 值，错误if created, id, err := o.ReadOrCreate(&amp;user, "Name"); err == nil &#123; if created &#123; fmt.Println("New Insert an object. Id:", id) &#125; else &#123; fmt.Println("Get an object. Id:", id) &#125;&#125; 字面意思：读取，不存在就创建 Insert o := orm.NewOrm()var user Useruser.Name = "slene"user.IsActive = trueid, err := o.Insert(&amp;user)if err == nil &#123; fmt.Println(id)&#125; 这个也简单，将一条数据新增到数据库，返回值为自增ID InsertMulti users := []User&#123; &#123;Name: "slene"&#125;, &#123;Name: "astaxie"&#125;, &#123;Name: "unknown"&#125;, ...&#125;successNums, err := o.InsertMulti(100, users) 传入的是models结构体的数组，第一个返回值为成功插入的数据量 Update o := orm.NewOrm()user := User&#123;Id: 1&#125;if o.Read(&amp;user) == nil &#123; user.Name = "MyName" if num, err := o.Update(&amp;user); err == nil &#123; fmt.Println(num) &#125;&#125; 第一个返回值为影响的行数 Delete o := orm.NewOrm()if num, err := o.Delete(&amp;User&#123;Id: 1&#125;); err == nil &#123; fmt.Println(num)&#125; 第一个返回值为影响的行数 SQL语句查询o := orm.NewOrm()var r RawSeterids := []int&#123;1, 2, 3&#125;r = o.Raw("SELECT name FROM user WHERE id IN (?, ?, ?)", ids) *注：“？”为占用符 而RawSeter下面有许多方法，用来解析返回的值，这些还没有用到，等以后进行补充。 To be continued!!!]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+        <tag>Beego</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Golang-类型断言]]></title>
+    <url>%2F2018%2F04%2F05%2FGolang-%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80%2F</url>
+    <content type="text"><![CDATA[关于类型断言，也是在接触Golang后台语言才明白的，也就是字面意思，断言一个interface{}未知类型变量的类型 断言写法value, ok := em.(T)，即Comma-ok断言。 em代表要判断的变量 T代表被判断的类型 value代表返回的值 ok代表是否为改类型 特性 em必须是initerface{}类型，也就是说必须是为一个未知类型的变量断言 switch与类型断言的结合 package mainimport ( "fmt")type Element interface &#123;&#125;func main() &#123; var e Element = 100 switch value := e.(type) &#123; case int: fmt.Println("int", value) case string: fmt.Println("string", value) default: fmt.Println("unknown", value) &#125;&#125; END]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Golang-Error类型]]></title>
+    <url>%2F2018%2F04%2F01%2FGolang-Error%E7%B1%BB%E5%9E%8B%2F</url>
+    <content type="text"><![CDATA[初学Golang，发现一个特别有意思的特性，那就是func多返回值，而以前用js的时候都是组装成对象返回，这个时候就体现出了静态语言的特性了，任何方法的参数不论是数量还是类型都已经定义好了，这样虽有所限制不如js灵活，但方便了规范和封装方法。而这其中最有用的就属返回error了。 error的实质结构如下： // The error built-in interface type is the conventional interface for// representing an error condition, with the nil value representing no error.type error interface &#123; Error() string&#125; 生成一个新的errorpackage mainimport ( "errors" "fmt")type Customerror struct &#123; infoa string infob string Err error&#125;func (cerr Customerror) Error() string &#123; errorInfo := fmt.Sprintf("infoa : %s , infob : %s , original err info : %s ", cerr.infoa, cerr.infob, cerr.Err.Error()) return errorInfo&#125;func main() &#123; //方法一： //采用errors包的New方法 返回一个err的类型 var err error = errors.New("this is a new error") //由于已经实现了error接口的方法 因此可以直接调用对应的方法 fmt.Println(err.Error()) //方法二： //采用fmt.Errof 将string信息转化为error信息 并返回 err = fmt.Errorf("%s", "the error test for fmt.Errorf") fmt.Println(err.Error()) //方法三： //采用自定义的方式实现一个error的 一个duck 类型 err = &amp;Customerror&#123; infoa: "err info a", infob: "err info b", Err: errors.New("test custom err"), &#125; fmt.Println(err.Error())&#125; END]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[fmt.Printf初学]]></title>
     <url>%2F2018%2F03%2F27%2Ffmt-Printf%E5%88%9D%E5%AD%A6%2F</url>
     <content type="text"><![CDATA[Emmmm…好吧，对于一个学了好几年JavaScript，而从来没有接触过后台的菜鸡，我对printf的了解还是当年大一学C的时候了。用习惯了console，感觉printf非常别扭，只能说弱类型语言太灵活了！ 来吧，列举下一些常见的格式化输出… General %v 以默认的方式打印变量的值 %T 打印变量的类型 Integer %+d 带符号的整型，fmt.Printf(&quot;%+d&quot;, 255) 输出 +255 %q 打印单引号 %o 不带零的八进制 %#o 带零的八进制 %x 小写的十六进制 %X 大写的十六进制 %#x 带0x的十六进制 %U 打印Unicode字符 %#U 打印带字符的Unicode %b 打印整型的二进制 Integer width %5d 表示该整型最大长度是5 fmt.Printf("|%5d|", 1) //| 1|fmt.Printf("|%5d|", 1234567) //|1234567| Integer width（续） %-5d 则相反，打印结果会自动左对齐 %05d 会在数字前面补零 Float %f(=%.6f) 6位小数点 %e(=%.6e) 6位小数点（科学计数法） %g 用最少的数字来表示 %.3g 最多3位数字来表示 %.3f 最多3位小数来表示 String %s 正常输出字符串 %q 字符串带双引号，字符串中的引号带转义符 %#q 字符串带反引号，如果字符串内有反引号，就用双引号代替 %x 将字符串转换为小写的16进制格式 %X 将字符串转换为大写的16进制格式 % x 带空格的16进制格式 String Width %5s 最小宽度为5 %-5s 最小宽度为5（左对齐） %.5s 最大宽度为5 %5.7s 最小宽度为5，最大宽度为7 %-5.7s 最小宽度为5，最大宽度为7（左对齐） %5.3s 如果宽度大于3，则截断 %05s 如果宽度小于5，就会在字符串前面补零 Struct %v 正常打印。比如：{sam {12345 67890}} %+v 带字段名称。比如：{name:sam phone:{mobile:12345 office:67890} %#v 用Go的语法打印，比如main.People{name:”sam”, phone:main.Phone{mobile:”12345”, office:”67890”}} Boolean %t 打印true或false Pointer %p 带0x的指针 %#p 不带0x的指针 printf和println的区别Printf : 只可以打印出格式化的字符串,可以输出字符串类型的变量，不可以输出整形变量和整形 Println : 可以打印出字符串，和变量 END]]></content>
