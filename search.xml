@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Golang-第三方包viper]]></title>
+    <url>%2F2018%2F05%2F22%2FGolang-%E7%AC%AC%E4%B8%89%E6%96%B9%E5%8C%85viper%2F</url>
+    <content type="text"><![CDATA[在自己写的组件里面，通常会遇到一些需要读取配置文件的情况。在使用beego时，是使用自带的方法获取./conf/app.conf文件中的内容，但在一个非beego框架的组件里并不想引入beego，于是乎学习了另外一个专门用来读取配置的包：“viper”。 初始化func init() &#123; //读取conf.toml配置信息 flag.IntVar(&amp;Port, "p", 5000, "监听的端口") flag.StringVar(&amp;ConfigPath, "c", "./conf/conf.toml", "配置文件的地址") flag.Parse() filenameWithSuffix := path.Base(ConfigPath) filePath := path.Dir(ConfigPath) fileSuffix := path.Ext(filenameWithSuffix) var filenameOnly string filenameOnly = strings.TrimSuffix(filenameWithSuffix, fileSuffix) viper.SetConfigType("toml") viper.SetConfigName(filenameOnly) //不带后缀的文件名 viper.AddConfigPath(filePath) err := viper.ReadInConfig() if err != nil &#123; plog.VFatal("Fatal error config file: %v", err) &#125;&#125; 存取配置viper包下有很多的Get开头的方法，对应着不同类型数据的获取，常用的如GetInt()，GetString()，GetIntSlice()，GetStringSlice()等等，都非常好理解，同样的取数据就是Set开头 [ljy__user] key_type = 1 sharding = "test" ttl = 2592000 order = ["id", "name", "age", "sex"] [ljy__user.key] item = ["id"] item_type = ["int32"] [ljy__user.field] item = ["id"] item_type = ["int32"] [ljy__user.value] item = ["name", "age", "sex"] item_type = ["string", "int64", "string"] 对于上面的配置例子就包含了int，string，[]string的类型，同时也有子元素的存取，就像结构体一样。 SubTableField := viper.GetString("ljy__user.sharding")SubTableMod := viper.GetInt("ljy__user.key_type")Item := viper.GetStringSlice("ljy__user.key.item") END]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Golang-日期格式转换]]></title>
+    <url>%2F2018%2F05%2F16%2FGolang-%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2%2F</url>
+    <content type="text"><![CDATA[最近遇到了一些日期类型转换的问题，字符串转date类型，时间的加减以及时分秒的获取等等…参考官网这里做一下总结。 在time包里主要有以下几个数据类型：time.Time，time.Month，time.Weekday，time.Duration，time.Location time.Timetime.Time 代表一个纳秒精度的时间点. type Time struct &#123; sec int64 // 从1年1月1日 00:00:00 UTC 至今过去的秒数 nsec int32 // 最近一秒到下一秒过去的纳秒数 loc *Location // 时区&#125; time.Monthtype Month int// 相关常量const ( January Month = 1 + iota February March April May June July August September October November December) time.Weekdaytype Weekday int// 相关常量const ( Sunday Weekday = iota Monday Tuesday Wednesday Thursday Friday Saturday) time.Durationtime.Duration 类型代表两个时间点之间经过的纳秒数，可表示的最长时间段约为290年。 type Duration int64// 相关常量const ( Nanosecond Duration = 1 Microsecond = 1000 * Nanosecond Millisecond = 1000 * Microsecond Second = 1000 * Millisecond Minute = 60 * Second Hour = 60 * Minute) time.LocationLocation代表一个地点，以及该地点所在的时区信息。北京时间可以使用Asia/Shanghai type Location struct &#123; name string zone []zone tx []zoneTrans cacheStart int64 cacheEnd int64 cacheZone *zone&#125;// 预定义时区变量var UTC *Location = &amp;utcLocvar Local *Location = &amp;localLoc 获取时间 func Now() Time {} // 当前本地时间 func Unix(sec int64, nsec int64) Time {} // 根据时间戳返回本地时间 func Date(year int, month Month, day, hour, min, sec, nsec int, loc *Location) Time {} // 返回指定时间 func (t Time) UTC() Time {} // 获取指定时间在UTC 时区的时间表示 func (t Time) Local() Time {} // 以本地时区表示 func (t Time) In(loc *Location) Time {} // 时间在指定时区的表示 func (t Time) Format(layout string) string {} // 按指定格式显示时间 // 当前本地时间t = time.Now()fmt.Println("'time.Now': ", t)// 根据时间戳返回本地时间t_by_unix := time.Unix(1487780010, 0)fmt.Println("'time.Unix': ", t_by_unix)// 返回指定时间t_by_date := time.Date(2017, time.Month(2), 23, 1, 30, 30, 0, l)fmt.Println("'time.Date': ", t_by_date)// 获取指定时间在UTC 时区的时间表示t_by_utc := t.UTC()fmt.Println("'t.UTC': ", t_by_utc)// 获取本地时间表示t_by_local := t.Local()fmt.Println("'t.Local': ", t_by_local)// 时间在指定时区的表示t_in := t.In(time.UTC)fmt.Println("'t.In': ", t_in)// Formatfmt.Println("t.Format", t.Format(time.RFC3339)) 获取日期 func (t Time) Date() (year int, month Month, day int) {} // 返回时间的日期信息 func (t Time) Year() int {} // 返回年 func (t Time) Month() Month {} // 月 func (t Time) Day() int {} // 日 func (t Time) Weekday() Weekday {} // 星期 func (t Time) ISOWeek() (year, week int) {} // 返回年，星期范围编号 func (t Time) Clock() (hour, min, sec int) {} // 返回时间的时分秒 func (t Time) Hour() int {} // 返回小时 func (t Time) Minute() int {} // 分钟 func (t Time) Second() int {} // 秒 func (t Time) Nanosecond() int {} // 纳秒 func (t Time) YearDay() int {} // 一年中对应的天 func (t Time) Location() *Location {} // 时间的时区 func (t Time) Zone() (name string, offset int) {} // 时间所在时区的规范名和想对UTC 时间偏移量 func (t Time) Unix() int64 {} // 时间转为时间戳 func (t Time) UnixNano() int64 {} // 时间转为时间戳（纳秒） // 返回时间的日期信息year, month, day := t.Date()fmt.Println("'t.Date': ", year, month, day)// 星期week := t.Weekday()fmt.Println("'t.Weekday': ", week)// 返回年，星期范围编号year, week_int := t.ISOWeek()fmt.Println("'t.ISOWeek': ", year, week_int)// 返回时间的时分秒hour, min, sec := t.Clock()fmt.Println("'t.Clock': ", hour, min, sec) 暂时只用到了这些，后面还有些序列化以及比较的方法，以后用到再做补充~ To be continued!!!]]></content>
+      <categories>
+        <category>《Go语言编程》笔记</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux-nohup命令]]></title>
     <url>%2F2018%2F05%2F11%2FLinux-nohup%E5%91%BD%E4%BB%A4%2F</url>
     <content type="text"><![CDATA[在golang的项目中，正常情况下，我去调试时，都是用go run main.go的命令来执行的，这样可以在命令行中查看打印的日志，但如果要把一个项目部署到服务器就必须让他自动执行，同时将日志打印到文件里存储。看了别人网上的建议，就学习了一下nohup命令 语法及描述 语法：nohup Command [ Arg … ] [ &amp; ] 描述：nohup 命令运行由 Command 参数和任何相关的 Arg 参数指定的命令，忽略所有挂断（SIGHUP）信号。在注销后使用 nohup 命令运行后台中的程序。要运行后台中的 nohup 命令，添加 &amp; （ 表示”and”的符号）到命令的尾部。无论是否将 nohup 命令的输出重定向到终端，输出都将附加到当前目录的 nohup.out 文件中。如果当前目录的 nohup.out 文件不可写，输出重定向到 $HOME/nohup.out 文件中。如果没有文件能创建或打开以用于追加，那么 Command 参数指定的命令不可调用。如果标准错误是一个终端，那么把指定的命令写给标准错误的所有输出作为标准输出重定向到相同的文件描述符。 可以说这个命令很符合预期，同时考虑到端口占用问题，就一并写在了shell里面，以下是我的start文件： service iptables stopserverId=`ps -ef | grep '/home/go/src/main' | grep -v 'grep' | awk '&#123;print $2&#125;'`if [ $serverId ]then kill -9 $serverIdfinohup /home/go/src/main &amp; END]]></content>
@@ -103,8 +125,8 @@
         <category>编程人生</category>
       </categories>
       <tags>
-        <tag>Beego</tag>
         <tag>Golang</tag>
+        <tag>Beego</tag>
       </tags>
   </entry>
   <entry>
