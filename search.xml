@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Linux-nohup命令]]></title>
+    <url>%2F2018%2F05%2F11%2FLinux-nohup%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[在golang的项目中，正常情况下，我去调试时，都是用go run main.go的命令来执行的，这样可以在命令行中查看打印的日志，但如果要把一个项目部署到服务器就必须让他自动执行，同时将日志打印到文件里存储。看了别人网上的建议，就学习了一下nohup命令 语法及描述 语法：nohup Command [ Arg … ] [ &amp; ] 描述：nohup 命令运行由 Command 参数和任何相关的 Arg 参数指定的命令，忽略所有挂断（SIGHUP）信号。在注销后使用 nohup 命令运行后台中的程序。要运行后台中的 nohup 命令，添加 &amp; （ 表示”and”的符号）到命令的尾部。无论是否将 nohup 命令的输出重定向到终端，输出都将附加到当前目录的 nohup.out 文件中。如果当前目录的 nohup.out 文件不可写，输出重定向到 $HOME/nohup.out 文件中。如果没有文件能创建或打开以用于追加，那么 Command 参数指定的命令不可调用。如果标准错误是一个终端，那么把指定的命令写给标准错误的所有输出作为标准输出重定向到相同的文件描述符。 可以说这个命令很符合预期，同时考虑到端口占用问题，就一并写在了shell里面，以下是我的start文件： service iptables stopserverId=`ps -ef | grep '/home/go/src/main' | grep -v 'grep' | awk '&#123;print $2&#125;'`if [ $serverId ]then kill -9 $serverIdfinohup /home/go/src/main &amp; END]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>命令</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Golang-通过反射将map数组转为结构体数组]]></title>
+    <url>%2F2018%2F05%2F06%2FGolang-%E9%80%9A%E8%BF%87%E5%8F%8D%E5%B0%84%E5%B0%86map%E6%95%B0%E7%BB%84%E8%BD%AC%E4%B8%BA%E7%BB%93%E6%9E%84%E4%BD%93%E6%95%B0%E7%BB%84%2F</url>
+    <content type="text"><![CDATA[做这个的需求是这样的，我在写一个数据组件，用来统一多个类型数据库的组件，简单的说就是通过tcp请求传入一个SQL语句，就会返回类似于mysql的相应结果，同时可以确保MySQL，Redis的数据一致性，初衷是为了减少MySQL的查询次数。 而最初的查询返回统一是一个map数组，也就是[]map[string]interface{}，但有一个问题就是，客户端拿到数据后，需要对类型进行断言，这里参考了orm的源码，以及网上的一些文章，然后用反射完成了单个结构体赋值，也就是orm中的err := o.Read(&amp;user)，做数组时参考了orm中的func (o *rawSet) QueryRows(containers ...interface{}) (int64, error) 遇到的问题： CanSet()方法返回false：解决方法就是传地址，这里所有的Can类型检测方法就是针对当前的reflect.Value进行校验，如果是一个地址类的value，那就可以进行相应的修改。 结构体赋值问题：要想访问结构体中的字段，有一个大前提条件就是首字母大写，而正常情况下MySQL存储的字段是下划线连接的小写字母，通过json包转换为golang的字段就变成了驼峰，但首字母是小写，这时候就要进行首字母处理。 数组增加元素：首先是要通过反射获取到数组元素的类型，然后通过类型去new一个结构体的实例出来，这里用到了reflect.New()方法，同时在最后的时候，要进行深度拷贝才可以将数组完全赋值给传进来的地址上。 代码如下：package mainimport ( "errors" "fmt" "reflect" "strings")func main() &#123; mList := []map[string]interface&#123;&#125;&#123; &#123;"Id": 213, "Name": "zhaoliu", "Sex": "男"&#125;, &#123;"Id": 56, "Name": "zhangsan", "Sex": "男"&#125;, &#123;"Id": 7, "Name": "lisi", "Sex": "女"&#125;, &#123;"Id": 978, "Name": "wangwu", "Sex": "男"&#125;, &#125; type User struct &#123; Id int Name string Sex string &#125; users := []*User&#123;&#125; mapToStruct(mList, &amp;users) fmt.Printf("users: %+v\n", users)&#125;func mapToStruct(mList []map[string]interface&#123;&#125;, model interface&#123;&#125;) (err error) &#123; val := reflect.Indirect(reflect.ValueOf(model)) typ := val.Type() fmt.Printf("val: %v\n", val) fmt.Printf("typ: %v\n", typ) for _, r := range mList &#123; mVal := reflect.Indirect(reflect.New(typ.Elem().Elem())).Addr() //fmt.Printf("mVal: %+v\n", mVal) for key, val := range r &#123; err = setField(mVal.Interface(), key, val) if err != nil &#123; return err &#125; &#125; //fmt.Printf("mVal: %+v\n", mVal) val = reflect.Append(val, mVal) &#125; fmt.Printf("val: %+v\n", val.Interface()) //model = val.Interface() return err&#125;//用map的值替换结构的值func setField(obj interface&#123;&#125;, name string, value interface&#123;&#125;) error &#123; // 将首字母转换为大写 sl := strings.Split(name, "") sl[0] = strings.ToUpper(sl[0]) name = strings.Join(sl, "") structValue := reflect.ValueOf(obj).Elem() //结构体属性值 //fmt.Printf("structValue: %+v\n", structValue) structFieldValue := structValue.FieldByName(name) //结构体单个属性值 //fmt.Printf("structFieldValue: %+v\n", structFieldValue) if !structFieldValue.IsValid() &#123; return fmt.Errorf("No such field: %s in obj", name) &#125; if !structFieldValue.CanSet() &#123; return fmt.Errorf("Cannot set %s field value", name) &#125; structFieldType := structFieldValue.Type() //结构体的类型 val := reflect.ValueOf(value) //map值的反射值 if structFieldType != val.Type() &#123; return errors.New("type is err") &#125; structFieldValue.Set(val) return nil&#125; END]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+        <tag>反射</tag>
+        <tag>类型转换</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[跨域POST请求发送两次请求的情况详解]]></title>
+    <url>%2F2018%2F05%2F03%2F%E8%B7%A8%E5%9F%9FPOST%E8%AF%B7%E6%B1%82%E5%8F%91%E9%80%81%E4%B8%A4%E6%AC%A1%E8%AF%B7%E6%B1%82%E7%9A%84%E6%83%85%E5%86%B5%E8%AF%A6%E8%A7%A3%2F</url>
+    <content type="text"><![CDATA[在制作golang组件的过程中，打算开发一个小工具用来配置组件的参数，后台用到了beego。在此期间遇到了一个问题：我在发送一个post请求时，在控制台总会看到两次请求，于是打算进一步地了解一下请求机制，并消去多余的HTTP请求。 请求头： 可以看到Request Method是OPTIONS，而不是POST，同时也没有对应的参数，看了网上的说法才了解到，第一次请求是用来进行预检，检查你是否有权限去进行此次的POST请求，而第二次请求就是正确的POST的请求了： beego的设置：beego.InsertFilter("*", beego.BeforeRouter, cors.Allow(&amp;cors.Options&#123; AllowOrigins: []string&#123;"http://dtsvr-tool.oa.com"&#125;, AllowMethods: []string&#123;"GET", "POST", "PUT", "DELETE", "OPTIONS"&#125;, AllowHeaders: []string&#123;"Origin", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"&#125;, ExposeHeaders: []string&#123;"Content-Length", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"&#125;, AllowCredentials: true,&#125;)) 而有次校验的原因是我发送了一个非简单请求，也是头一次听说这个词，于是就搜索了一哈： 非简单请求：只使用 GET, HEAD 或者 POST 请求方法。如果使用 POST 向服务器端传送数据，则数据类型 (Content-Type) 只能是 application/x-www-form-urlencoded, multipart/form-data 或 text/plain中的一种。 那按照上述所说，只要把请求改成简单请求就可以了，方法有两个： 将post请求改为get请求 axios.interceptors.request.use(function (config) &#123; config.withCredentials = true if (config.method === 'post' &amp;&amp; config.data.constructor.name !== 'FormData') &#123; let params = &#123;&#125; let str = [] for (let k in config.data) &#123; if (typeof config.data[k] !== 'function') &#123; // 参数是对象，并且不为空 if (typeof config.data[k] === 'object') &#123; params[k] = JSON.stringify(config.data[k]) &#125; else &#123; params[k] = config.data[k] &#125; &#125; &#125; Object.keys(params).map(function (key) &#123; str.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key])) &#125;) config.data = str.join('&amp;') &#125; // Do something before request is sent return config&#125;, function (error) &#123; // Do something with request error return Promise.reject(error)&#125;) 将post的header改为application/x-www-form-urlencoded,multipart/form-data或者text/plain config.headers = 'application/x-www-form-urlencoded;charset=utf-8' 这样我们就可以忽略掉预检请求，而只发送一次请求了。 END]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>HTTP</tag>
+        <tag>AJAX</tag>
+        <tag>跨域请求</tag>
+        <tag>BeeGo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Golang-字符串大小写转换]]></title>
     <url>%2F2018%2F04%2F29%2FGolang-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2%2F</url>
     <content type="text"><![CDATA[Go语言的string模块包含了ToLower和ToUpper函数，用于将字符串转换成小写和大写 package mainimport ( "fmt" "strings")func main() &#123; fmt.Println(strings.ToUpper("hello world")) fmt.Println(strings.ToLower("HELLO WORLD"))&#125; END]]></content>
