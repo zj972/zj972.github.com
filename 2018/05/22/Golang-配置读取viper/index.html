@@ -100,20 +100,20 @@
 
 
   
-  <meta name="keywords" content="Golang," />
+  <meta name="keywords" content="Golang,第三方包," />
 
 
 <meta name="description" content="在自己写的组件里面，通常会遇到一些需要读取配置文件的情况。在使用beego时，是使用自带的方法获取./conf/app.conf文件中的内容，但在一个非beego框架的组件里并不想引入beego，于是乎学习了另外一个专门用来读取配置的包：“viper”。 功能特征 设置默认值  从JSON，toml YAML，HCl,和java属性配置文件  从环境变量env读取值  读缓冲区  远程读取配置文件">
-<meta name="keywords" content="Golang">
+<meta name="keywords" content="Golang,第三方包">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Golang-第三方包viper">
-<meta property="og:url" content="http://www.yangshaobo.cn/2018/05/22/Golang-第三方包viper/index.html">
+<meta property="og:title" content="Golang-配置读取viper">
+<meta property="og:url" content="http://www.yangshaobo.cn/2018/05/22/Golang-配置读取viper/index.html">
 <meta property="og:site_name" content="Sarbo&#39;s blog">
 <meta property="og:description" content="在自己写的组件里面，通常会遇到一些需要读取配置文件的情况。在使用beego时，是使用自带的方法获取./conf/app.conf文件中的内容，但在一个非beego框架的组件里并不想引入beego，于是乎学习了另外一个专门用来读取配置的包：“viper”。 功能特征 设置默认值  从JSON，toml YAML，HCl,和java属性配置文件  从环境变量env读取值  读缓冲区  远程读取配置文件">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-16T07:19:42.237Z">
+<meta property="og:updated_time" content="2018-11-07T09:33:20.371Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Golang-第三方包viper">
+<meta name="twitter:title" content="Golang-配置读取viper">
 <meta name="twitter:description" content="在自己写的组件里面，通常会遇到一些需要读取配置文件的情况。在使用beego时，是使用自带的方法获取./conf/app.conf文件中的内容，但在一个非beego框架的组件里并不想引入beego，于是乎学习了另外一个专门用来读取配置的包：“viper”。 功能特征 设置默认值  从JSON，toml YAML，HCl,和java属性配置文件  从环境变量env读取值  读缓冲区  远程读取配置文件">
 
 
@@ -121,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="http://www.yangshaobo.cn/2018/05/22/Golang-第三方包viper/"/>
+  <link rel="canonical" href="http://www.yangshaobo.cn/2018/05/22/Golang-配置读取viper/"/>
 
 
 
@@ -130,7 +130,7 @@
     sidebar: "",
   };
 </script>
-  <title>Golang-第三方包viper | Sarbo's blog</title>
+  <title>Golang-配置读取viper | Sarbo's blog</title>
   
 
 
@@ -323,7 +323,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.yangshaobo.cn/2018/05/22/Golang-第三方包viper/">
+    <link itemprop="mainEntityOfPage" href="http://www.yangshaobo.cn/2018/05/22/Golang-配置读取viper/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sarbo Yang">
@@ -340,7 +340,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Golang-第三方包viper</h1>
+          <h1 class="post-title" itemprop="name headline">Golang-配置读取viper</h1>
         
 
         <div class="post-meta">
@@ -482,6 +482,8 @@
           
             <a href="/tags/Golang/" rel="tag"><i class="fa fa-tag"></i> Golang</a>
           
+            <a href="/tags/第三方包/" rel="tag"><i class="fa fa-tag"></i> 第三方包</a>
+          
         </div>
       
 
@@ -614,7 +616,7 @@ var jiathis_config={
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -686,7 +688,11 @@ var jiathis_config={
                     
                       
                     
-                    <span class="site-state-item-count">20</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -831,7 +837,7 @@ var jiathis_config={
       <!-- <i class="fa fa-font"></i> -->
       | 总字数：
       <span class="busuanzi-value" id="busuanzi_value_site_uv">
-        <span class="post-count">8.7k</span>
+        <span class="post-count">9.5k</span>
       </span>
     </span>
   

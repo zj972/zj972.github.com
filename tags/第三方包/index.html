@@ -100,28 +100,26 @@
 
 
   
-  <meta name="keywords" content="Golang,第三方包," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
-<meta name="description" content="在开发数据组件的过程中遇到了一个场景：通过redis缓存了一些数据操作，需要定时的将数据落地，这个时候就想到了使用Linux中的crontab，但遇到问题是，这个要执行的数据落地需要使用组件进程的一些内存数据，所以只能在当前进程下完成定时任务，没有办法使用系统级别的进程定时。 cron包地址是：github.com/robfig/cron，它的优点就是可以在当前进程跑某个goroutine，而且可">
-<meta name="keywords" content="Golang,第三方包">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Golang-定时任务之cron">
-<meta property="og:url" content="http://www.yangshaobo.cn/2018/06/25/Golang-定时任务之cron/index.html">
+<meta name="description" content="一个爱折腾的小码农">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sarbo&#39;s blog">
+<meta property="og:url" content="http://www.yangshaobo.cn/tags/第三方包/index.html">
 <meta property="og:site_name" content="Sarbo&#39;s blog">
-<meta property="og:description" content="在开发数据组件的过程中遇到了一个场景：通过redis缓存了一些数据操作，需要定时的将数据落地，这个时候就想到了使用Linux中的crontab，但遇到问题是，这个要执行的数据落地需要使用组件进程的一些内存数据，所以只能在当前进程下完成定时任务，没有办法使用系统级别的进程定时。 cron包地址是：github.com/robfig/cron，它的优点就是可以在当前进程跑某个goroutine，而且可">
+<meta property="og:description" content="一个爱折腾的小码农">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-07T09:32:26.157Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Golang-定时任务之cron">
-<meta name="twitter:description" content="在开发数据组件的过程中遇到了一个场景：通过redis缓存了一些数据操作，需要定时的将数据落地，这个时候就想到了使用Linux中的crontab，但遇到问题是，这个要执行的数据落地需要使用组件进程的一些内存数据，所以只能在当前进程下完成定时任务，没有办法使用系统级别的进程定时。 cron包地址是：github.com/robfig/cron，它的优点就是可以在当前进程跑某个goroutine，而且可">
+<meta name="twitter:title" content="Sarbo&#39;s blog">
+<meta name="twitter:description" content="一个爱折腾的小码农">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.yangshaobo.cn/2018/06/25/Golang-定时任务之cron/"/>
+  <link rel="canonical" href="http://www.yangshaobo.cn/tags/第三方包/"/>
 
 
 
@@ -130,7 +128,7 @@
     sidebar: "",
   };
 </script>
-  <title>Golang-定时任务之cron | Sarbo's blog</title>
+  <title>标签: 第三方包 | Sarbo's blog</title>
   
 
 
@@ -184,7 +182,7 @@
     
   
 
-  <div class="container sidebar-position-right page-post-detail">
+  <div class="container sidebar-position-right ">
     <div class="headband"></div>
 
     <a href="https://github.com/zj972" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
@@ -307,289 +305,114 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>第三方包<small>标签</small>
+        </h1>
+      </div>
 
-  
-  
-  
-
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.yangshaobo.cn/2018/06/25/Golang-定时任务之cron/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Sarbo Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://img.yangshaobo.cn/icon.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sarbo's blog">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2018/06/30/Golang-信号处理/" itemprop="url">
+              
+                <span itemprop="name">Golang-信号处理</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">Golang-定时任务之cron</h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-25T18:48:57+08:00">2018-06-25</time>
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-06-30T17:27:32+08:00"
+              content="2018-06-30" >
+          06-30
+        </time>
+      </div>
 
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程人生/" itemprop="url" rel="index"><span itemprop="name">编程人生</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="post-meta-item-icon"
-            >
-            <i class="fa fa-eye"></i>
-             阅读次数： 
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
-            </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>在开发数据组件的过程中遇到了一个场景：通过redis缓存了一些数据操作，需要定时的将数据落地，这个时候就想到了使用Linux中的crontab，但遇到问题是，这个要执行的数据落地需要使用组件进程的一些内存数据，所以只能在当前进程下完成定时任务，没有办法使用系统级别的进程定时。</p>
-<h2 id="cron包"><a href="#cron包" class="headerlink" title="cron包"></a>cron包</h2><p>地址是：<code>github.com/robfig/cron</code>，它的优点就是可以在当前进程跑某个goroutine，而且可以精确到秒。</p>
-<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"github.com/robfig/cron"</span></span><br><span class="line">    <span class="string">"log"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    i := <span class="number">0</span></span><br><span class="line">    c := cron.New()</span><br><span class="line">    spec := <span class="string">"0 10,20,30,40,50 * * * ?"</span></span><br><span class="line">    c.AddFunc(spec, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        i++</span><br><span class="line">        log.Println(<span class="string">"cron running:"</span>, i)</span><br><span class="line">    &#125;)</span><br><span class="line">    c.Start()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">select</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">启动后输出如下：</span><br><span class="line"></span><br><span class="line">2018/06/25 18:00:00 cron running: 1</span><br><span class="line">2018/06/25 18:10:00 cron running: 2</span><br><span class="line">2018/06/25 18:20:00 cron running: 3</span><br><span class="line">2018/06/25 18:30:00 cron running: 4</span><br><span class="line">2018/06/25 18:40:00 cron running: 5</span><br></pre></td></tr></table></figure>
-<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><h3 id="基础格式"><a href="#基础格式" class="headerlink" title="基础格式"></a>基础格式</h3><p>在cron中，最关键的是一个字符串，他包括了6个参数，并用空格隔开。</p>
-<table>
-<thead>
-<tr>
-<th>字段含义</th>
-<th>必须</th>
-<th>值范围</th>
-<th>特殊字符</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>秒(Seconds)</td>
-<td>是</td>
-<td>0-59</td>
-<td>* / , -</td>
-</tr>
-<tr>
-<td>分(Minutes)</td>
-<td>是</td>
-<td>0-59</td>
-<td>* / , -</td>
-</tr>
-<tr>
-<td>时(Hours)</td>
-<td>是</td>
-<td>0-23</td>
-<td>* / , -</td>
-</tr>
-<tr>
-<td>日(Day of month)</td>
-<td>是</td>
-<td>1-31</td>
-<td>* / , - ?</td>
-</tr>
-<tr>
-<td>月(Month)</td>
-<td>是</td>
-<td>0-12 or JAN-DEC</td>
-<td>* / , -</td>
-</tr>
-<tr>
-<td>星期(Day of week)</td>
-<td>否</td>
-<td>0-6 or SUM-SAT</td>
-<td>* / , - ?</td>
-</tr>
-</tbody>
-</table>
-<p>注：字母不区分大小写</p>
-<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><ul>
-<li><p>星号(*) 表示 cron 表达式能匹配该字段的所有值。如在第5个字段使用星号(month)，表示每个月</p>
-</li>
-<li><p>斜线(/) 表示增长间隔，如第1个字段(minutes) 值是 3-59/15，表示每小时的第3分钟开始执行一次，之后每隔 15 分钟执行一次（即 3、18、33、48 这些时间点执行），这里也可以表示为：3/15</p>
-</li>
-<li><p>逗号(,) 用于枚举值，如第6个字段值是 MON,WED,FRI，表示 星期一、三、五 执行</p>
-</li>
-<li><p>连字号(-) 表示一个范围，如第3个字段的值为 9-17 表示 9am 到 5pm 直接每个小时（包括9和17）</p>
-</li>
-<li><p>问号(?) 只用于日(Day of month)和星期(Day of week)，\表示不指定值，可以用于代替 *</p>
-</li>
-</ul>
-<p>END</p>
-
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Golang/" rel="tag"><i class="fa fa-tag"></i> Golang</a>
-          
-            <a href="/tags/第三方包/" rel="tag"><i class="fa fa-tag"></i> 第三方包</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/06/13/MySQL8-error_2059/" rel="next" title="MySQL8-error_2059">
-                <i class="fa fa-chevron-left"></i> MySQL8-error_2059
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/30/Golang-信号处理/" rel="prev" title="Golang-信号处理">
-                Golang-信号处理 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
-        <!-- JiaThis Button BEGIN -->
-<div class="jiathis_style">
-<span class="jiathis_txt">分享到：</span>
-<a class="jiathis_button_fav">收藏夹</a>
-<a class="jiathis_button_copy">复制网址</a>
-<a class="jiathis_button_email">邮件</a>
-<a class="jiathis_button_weixin">微信</a>
-<a class="jiathis_button_qzone">QQ空间</a>
-<a class="jiathis_button_tqq">腾讯微博</a>
-<a class="jiathis_button_douban">豆瓣</a>
-<a class="jiathis_button_share">一键分享</a>
+        
 
-<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
-<a class="jiathis_counter_style"></a>
-</div>
-<script type="text/javascript" >
-var jiathis_config={
-  data_track_clickback:true,
-  summary:"",
-  shortUrl:false,
-  hideMore:false
-}
-</script>
-<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2158473" charset="utf-8"></script>
-<!-- JiaThis Button END -->
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2018/06/25/Golang-定时任务之cron/" itemprop="url">
+              
+                <span itemprop="name">Golang-定时任务之cron</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-06-25T18:48:57+08:00"
+              content="2018-06-25" >
+          06-25
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2018/05/22/Golang-配置读取viper/" itemprop="url">
+              
+                <span itemprop="name">Golang-配置读取viper</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-05-22T18:59:19+08:00"
+              content="2018-05-22" >
+          05-22
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
       
     </div>
+
   </div>
+  
+  
+  
+
+  
 
 
           </div>
           
-
-  
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNDQ2MC8xMDk5Nw"></div>
-    </div>
-
-  
-
-
 
         </div>
         
@@ -610,17 +433,8 @@ var jiathis_config={
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -785,22 +599,6 @@ var jiathis_config={
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cron包"><span class="nav-number">1.</span> <span class="nav-text">cron包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#格式"><span class="nav-number">3.</span> <span class="nav-text">格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础格式"><span class="nav-number">3.1.</span> <span class="nav-text">基础格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊字符"><span class="nav-number">3.2.</span> <span class="nav-text">特殊字符</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
 
@@ -951,10 +749,6 @@ var jiathis_config={
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script>
-
-
 
   
 
@@ -979,17 +773,6 @@ var jiathis_config={
 
 
 
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
   
 
 

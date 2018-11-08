@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Web前端-WebSocket]]></title>
+    <url>%2F2018%2F07%2F08%2FWeb%E5%89%8D%E7%AB%AF-WebSocket%2F</url>
+    <content type="text"><![CDATA[之前做前端大部分请求都是普通的HTTP请求，并没有接触过WebSocket，最近在做一个日志展示，需要实时输出，所以就用到了WebSocket，这里主要记录一下前端，也就是客户端的操作。 // 打开一个WebSocket连接let ws = new WebSocket('ws://192.168.201.182:9001/pods/stdout/tails')// 当打开连接时的操作ws.onopen = () =&gt; &#123; // 由于业务需求，要在打开时发送参数请求 ws.send('something')&#125;// 当关闭连接时的操作// 注意：这里的关闭是指服务端关闭this.ws.onclose = () =&gt; &#123; // do something&#125;// 收到数据时的操作this.ws.onmessage = (msg) =&gt; &#123; // do something&#125;// 收到错误时的操作this.ws.onerror = (e) =&gt; &#123; // do something&#125; 上面注册的ws连接，有两个基础方法： ws.send()：主动发送请求给后台，参数是一个字符串，格式自己定义。 ws.close()：发送一个请求，告知后台要关闭连接，当收到响应时会出发ws.onclose()，此时这个WebSocket连接就已经关闭了。 同时ws有一个常用的基础方法ws.readyState，表示当前socket的连接状态： 0 - 表示连接尚未建立。 1 - 表示连接已建立，可以进行通信。 2 - 表示连接正在进行关闭（即前端触发ws.close()但还未收到响应）。 3 - 表示连接已经关闭或者连接不能打开。 END]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Golang-信号处理]]></title>
+    <url>%2F2018%2F06%2F30%2FGolang-%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%2F</url>
+    <content type="text"><![CDATA[当进程正在执行时，通常会通过kill -9 PID来将其结束，这个时候的操作就是向进程传递一个信号，进程收到信号就会进行对应的操作，9就是最常用到的杀掉进程操作。 信号类型 信号 值 动作 说明 SIGHUP 1 Term 终端控制进程结束(终端连接断开) SIGINT 2 Term 用户发送INTR字符(Ctrl+C)触发 SIGQUIT 3 Core 用户发送QUIT字符(Ctrl+/)触发 SIGILL 4 Core 非法指令(程序错误、试图执行数据段、栈溢出等) SIGABRT 6 Core 调用abort函数触发 SIGFPE 8 Core 算术运行错误(浮点运算错误、除数为零等) SIGKILL 9 Term 无条件结束程序(不能被捕获、阻塞或忽略) SIGSEGV 11 Core 无效内存引用(试图访问不属于自己的内存空间、对只读内存空间进行写操作) SIGPIPE 13 Term 消息管道损坏(FIFO/Socket通信时，管道未打开而进行写操作) SIGALRM 14 Term 时钟定时信号 SIGTERM 15 Term 结束程序(可以被捕获、阻塞或忽略) SIGUSR1 30,10,16 Term 用户保留 SIGUSR2 31,12,17 Term 用户保留 SIGCHLD 20,17,18 Ign 子进程结束(由父进程接收) SIGCONT 19,18,25 Cont 继续执行已经停止的进程(不能被阻塞) SIGSTOP 17,19,23 Stop 停止进程(不能被捕获、阻塞或忽略) SIGTSTP 18,20,24 Stop 停止进程(可以被捕获、阻塞或忽略) SIGTTIN 21,21,26 Stop 后台程序从终端中读取数据时触发 SIGTTOU 22,22,27 Stop 后台程序向终端中写数据时触发 Golang中信号的应用一个简单的例子： package mainimport ( "fmt" "os" "os/signal" "time")func main() &#123; go signalListen() time.Sleep(time.Hour)&#125;func signalListen() &#123; c := make(chan os.Signal) signal.Notify(c) for &#123; s := &lt;-c //收到信号后的处理，这里只是输出信号内容，可以做一些更有意思的事 fmt.Println("get signal:", s) os.Exit(1) &#125;&#125; 首先make一个channel，它的类型是os.Signal，然后用signal.Notify来注册，这样当有信号传入进程时，c就可以接收到，同时通过channel机制执行接收到数据后的操作。 END]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+        <tag>第三方包</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Golang-定时任务之cron]]></title>
     <url>%2F2018%2F06%2F25%2FGolang-%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E4%B9%8Bcron%2F</url>
     <content type="text"><![CDATA[在开发数据组件的过程中遇到了一个场景：通过redis缓存了一些数据操作，需要定时的将数据落地，这个时候就想到了使用Linux中的crontab，但遇到问题是，这个要执行的数据落地需要使用组件进程的一些内存数据，所以只能在当前进程下完成定时任务，没有办法使用系统级别的进程定时。 cron包地址是：github.com/robfig/cron，它的优点就是可以在当前进程跑某个goroutine，而且可以精确到秒。 实例package mainimport ( "github.com/robfig/cron" "log")func main() &#123; i := 0 c := cron.New() spec := "0 10,20,30,40,50 * * * ?" c.AddFunc(spec, func() &#123; i++ log.Println("cron running:", i) &#125;) c.Start() select&#123;&#125;&#125; 输出结果： 启动后输出如下：2018/06/25 18:00:00 cron running: 12018/06/25 18:10:00 cron running: 22018/06/25 18:20:00 cron running: 32018/06/25 18:30:00 cron running: 42018/06/25 18:40:00 cron running: 5 格式基础格式在cron中，最关键的是一个字符串，他包括了6个参数，并用空格隔开。 字段含义 必须 值范围 特殊字符 秒(Seconds) 是 0-59 * / , - 分(Minutes) 是 0-59 * / , - 时(Hours) 是 0-23 * / , - 日(Day of month) 是 1-31 * / , - ? 月(Month) 是 0-12 or JAN-DEC * / , - 星期(Day of week) 否 0-6 or SUM-SAT * / , - ? 注：字母不区分大小写 特殊字符 星号(*) 表示 cron 表达式能匹配该字段的所有值。如在第5个字段使用星号(month)，表示每个月 斜线(/) 表示增长间隔，如第1个字段(minutes) 值是 3-59/15，表示每小时的第3分钟开始执行一次，之后每隔 15 分钟执行一次（即 3、18、33、48 这些时间点执行），这里也可以表示为：3/15 逗号(,) 用于枚举值，如第6个字段值是 MON,WED,FRI，表示 星期一、三、五 执行 连字号(-) 表示一个范围，如第3个字段的值为 9-17 表示 9am 到 5pm 直接每个小时（包括9和17） 问号(?) 只用于日(Day of month)和星期(Day of week)，\表示不指定值，可以用于代替 * END]]></content>
@@ -9,6 +32,7 @@
       </categories>
       <tags>
         <tag>Golang</tag>
+        <tag>第三方包</tag>
       </tags>
   </entry>
   <entry>
@@ -36,14 +60,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Golang-第三方包viper]]></title>
-    <url>%2F2018%2F05%2F22%2FGolang-%E7%AC%AC%E4%B8%89%E6%96%B9%E5%8C%85viper%2F</url>
+    <title><![CDATA[Golang-配置读取viper]]></title>
+    <url>%2F2018%2F05%2F22%2FGolang-%E9%85%8D%E7%BD%AE%E8%AF%BB%E5%8F%96viper%2F</url>
     <content type="text"><![CDATA[在自己写的组件里面，通常会遇到一些需要读取配置文件的情况。在使用beego时，是使用自带的方法获取./conf/app.conf文件中的内容，但在一个非beego框架的组件里并不想引入beego，于是乎学习了另外一个专门用来读取配置的包：“viper”。 功能特征 设置默认值 从JSON，toml YAML，HCl,和java属性配置文件 从环境变量env读取值 读缓冲区 远程读取配置文件 key不区分大小写 初始化func init() &#123; //读取conf.toml配置信息 flag.IntVar(&amp;Port, "p", 5000, "监听的端口") flag.StringVar(&amp;ConfigPath, "c", "./conf/conf.toml", "配置文件的地址") flag.Parse() filenameWithSuffix := path.Base(ConfigPath) filePath := path.Dir(ConfigPath) fileSuffix := path.Ext(filenameWithSuffix) var filenameOnly string filenameOnly = strings.TrimSuffix(filenameWithSuffix, fileSuffix) viper.SetConfigType("toml") viper.SetConfigName(filenameOnly) //不带后缀的文件名 viper.AddConfigPath(filePath) err := viper.ReadInConfig() if err != nil &#123; plog.VFatal("Fatal error config file: %v", err) &#125;&#125; 存取配置viper包下有很多的Get开头的方法，对应着不同类型数据的获取，常用的如GetInt()，GetString()，GetIntSlice()，GetStringSlice()等等，都非常好理解，同样的取数据就是Set开头 phalgo.Config.Get(key string) : interface{} phalgo.Config.GetBool(key string) : bool phalgo.Config.GetFloat64(key string) : float64 phalgo.Config.GetInt(key string) : int phalgo.Config.GetString(key string) : string phalgo.Config.GetStringMap(key string) : map[string]interface{} phalgo.Config.GetStringMapString(key string) : map[string]string phalgo.Config.GetStringSlice(key string) : []string phalgo.Config.GetTime(key string) : time.Time phalgo.Config.GetDuration(key string) : time.Duration phalgo.Config.IsSet(key string) : bool [ljy__user] key_type = 1 sharding = "test" ttl = 2592000 order = ["id", "name", "age", "sex"] [ljy__user.key] item = ["id"] item_type = ["int32"] [ljy__user.field] item = ["id"] item_type = ["int32"] [ljy__user.value] item = ["name", "age", "sex"] item_type = ["string", "int64", "string"] 对于上面的配置例子就包含了int，string，[]string的类型，同时也有子元素的存取，就像结构体一样。 SubTableField := viper.GetString("ljy__user.sharding")SubTableMod := viper.GetInt("ljy__user.key_type")Item := viper.GetStringSlice("ljy__user.key.item") END]]></content>
       <categories>
         <category>编程人生</category>
       </categories>
       <tags>
         <tag>Golang</tag>
+        <tag>第三方包</tag>
       </tags>
   </entry>
   <entry>

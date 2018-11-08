@@ -100,28 +100,28 @@
 
 
   
-  <meta name="keywords" content="Golang,第三方包," />
+  <meta name="keywords" content="JavaScript," />
 
 
-<meta name="description" content="在开发数据组件的过程中遇到了一个场景：通过redis缓存了一些数据操作，需要定时的将数据落地，这个时候就想到了使用Linux中的crontab，但遇到问题是，这个要执行的数据落地需要使用组件进程的一些内存数据，所以只能在当前进程下完成定时任务，没有办法使用系统级别的进程定时。 cron包地址是：github.com/robfig/cron，它的优点就是可以在当前进程跑某个goroutine，而且可">
-<meta name="keywords" content="Golang,第三方包">
+<meta name="description" content="之前做前端大部分请求都是普通的HTTP请求，并没有接触过WebSocket，最近在做一个日志展示，需要实时输出，所以就用到了WebSocket，这里主要记录一下前端，也就是客户端的操作。 // 打开一个WebSocket连接let ws = new WebSocket(&apos;ws://192.168.201.182:9001/pods/stdout/tails&apos;)// 当打开连接时的操作ws.onop">
+<meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Golang-定时任务之cron">
-<meta property="og:url" content="http://www.yangshaobo.cn/2018/06/25/Golang-定时任务之cron/index.html">
+<meta property="og:title" content="Web前端-WebSocket">
+<meta property="og:url" content="http://www.yangshaobo.cn/2018/07/08/Web前端-WebSocket/index.html">
 <meta property="og:site_name" content="Sarbo&#39;s blog">
-<meta property="og:description" content="在开发数据组件的过程中遇到了一个场景：通过redis缓存了一些数据操作，需要定时的将数据落地，这个时候就想到了使用Linux中的crontab，但遇到问题是，这个要执行的数据落地需要使用组件进程的一些内存数据，所以只能在当前进程下完成定时任务，没有办法使用系统级别的进程定时。 cron包地址是：github.com/robfig/cron，它的优点就是可以在当前进程跑某个goroutine，而且可">
+<meta property="og:description" content="之前做前端大部分请求都是普通的HTTP请求，并没有接触过WebSocket，最近在做一个日志展示，需要实时输出，所以就用到了WebSocket，这里主要记录一下前端，也就是客户端的操作。 // 打开一个WebSocket连接let ws = new WebSocket(&apos;ws://192.168.201.182:9001/pods/stdout/tails&apos;)// 当打开连接时的操作ws.onop">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-07T09:32:26.157Z">
+<meta property="og:updated_time" content="2018-11-08T07:39:46.684Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Golang-定时任务之cron">
-<meta name="twitter:description" content="在开发数据组件的过程中遇到了一个场景：通过redis缓存了一些数据操作，需要定时的将数据落地，这个时候就想到了使用Linux中的crontab，但遇到问题是，这个要执行的数据落地需要使用组件进程的一些内存数据，所以只能在当前进程下完成定时任务，没有办法使用系统级别的进程定时。 cron包地址是：github.com/robfig/cron，它的优点就是可以在当前进程跑某个goroutine，而且可">
+<meta name="twitter:title" content="Web前端-WebSocket">
+<meta name="twitter:description" content="之前做前端大部分请求都是普通的HTTP请求，并没有接触过WebSocket，最近在做一个日志展示，需要实时输出，所以就用到了WebSocket，这里主要记录一下前端，也就是客户端的操作。 // 打开一个WebSocket连接let ws = new WebSocket(&apos;ws://192.168.201.182:9001/pods/stdout/tails&apos;)// 当打开连接时的操作ws.onop">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.yangshaobo.cn/2018/06/25/Golang-定时任务之cron/"/>
+  <link rel="canonical" href="http://www.yangshaobo.cn/2018/07/08/Web前端-WebSocket/"/>
 
 
 
@@ -130,7 +130,7 @@
     sidebar: "",
   };
 </script>
-  <title>Golang-定时任务之cron | Sarbo's blog</title>
+  <title>Web前端-WebSocket | Sarbo's blog</title>
   
 
 
@@ -323,7 +323,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.yangshaobo.cn/2018/06/25/Golang-定时任务之cron/">
+    <link itemprop="mainEntityOfPage" href="http://www.yangshaobo.cn/2018/07/08/Web前端-WebSocket/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Sarbo Yang">
@@ -340,7 +340,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Golang-定时任务之cron</h1>
+          <h1 class="post-title" itemprop="name headline">Web前端-WebSocket</h1>
         
 
         <div class="post-meta">
@@ -352,7 +352,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-25T18:48:57+08:00">2018-06-25</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-08T15:23:11+08:00">2018-07-08</time>
             
 
             
@@ -415,71 +415,24 @@
       
 
       
-        <p>在开发数据组件的过程中遇到了一个场景：通过redis缓存了一些数据操作，需要定时的将数据落地，这个时候就想到了使用Linux中的crontab，但遇到问题是，这个要执行的数据落地需要使用组件进程的一些内存数据，所以只能在当前进程下完成定时任务，没有办法使用系统级别的进程定时。</p>
-<h2 id="cron包"><a href="#cron包" class="headerlink" title="cron包"></a>cron包</h2><p>地址是：<code>github.com/robfig/cron</code>，它的优点就是可以在当前进程跑某个goroutine，而且可以精确到秒。</p>
-<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"github.com/robfig/cron"</span></span><br><span class="line">    <span class="string">"log"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    i := <span class="number">0</span></span><br><span class="line">    c := cron.New()</span><br><span class="line">    spec := <span class="string">"0 10,20,30,40,50 * * * ?"</span></span><br><span class="line">    c.AddFunc(spec, <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">        i++</span><br><span class="line">        log.Println(<span class="string">"cron running:"</span>, i)</span><br><span class="line">    &#125;)</span><br><span class="line">    c.Start()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">select</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">启动后输出如下：</span><br><span class="line"></span><br><span class="line">2018/06/25 18:00:00 cron running: 1</span><br><span class="line">2018/06/25 18:10:00 cron running: 2</span><br><span class="line">2018/06/25 18:20:00 cron running: 3</span><br><span class="line">2018/06/25 18:30:00 cron running: 4</span><br><span class="line">2018/06/25 18:40:00 cron running: 5</span><br></pre></td></tr></table></figure>
-<h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><h3 id="基础格式"><a href="#基础格式" class="headerlink" title="基础格式"></a>基础格式</h3><p>在cron中，最关键的是一个字符串，他包括了6个参数，并用空格隔开。</p>
-<table>
-<thead>
-<tr>
-<th>字段含义</th>
-<th>必须</th>
-<th>值范围</th>
-<th>特殊字符</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>秒(Seconds)</td>
-<td>是</td>
-<td>0-59</td>
-<td>* / , -</td>
-</tr>
-<tr>
-<td>分(Minutes)</td>
-<td>是</td>
-<td>0-59</td>
-<td>* / , -</td>
-</tr>
-<tr>
-<td>时(Hours)</td>
-<td>是</td>
-<td>0-23</td>
-<td>* / , -</td>
-</tr>
-<tr>
-<td>日(Day of month)</td>
-<td>是</td>
-<td>1-31</td>
-<td>* / , - ?</td>
-</tr>
-<tr>
-<td>月(Month)</td>
-<td>是</td>
-<td>0-12 or JAN-DEC</td>
-<td>* / , -</td>
-</tr>
-<tr>
-<td>星期(Day of week)</td>
-<td>否</td>
-<td>0-6 or SUM-SAT</td>
-<td>* / , - ?</td>
-</tr>
-</tbody>
-</table>
-<p>注：字母不区分大小写</p>
-<h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><ul>
-<li><p>星号(*) 表示 cron 表达式能匹配该字段的所有值。如在第5个字段使用星号(month)，表示每个月</p>
+        <p>之前做前端大部分请求都是普通的HTTP请求，并没有接触过WebSocket，最近在做一个日志展示，需要实时输出，所以就用到了WebSocket，这里主要记录一下前端，也就是客户端的操作。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 打开一个WebSocket连接</span></span><br><span class="line"><span class="keyword">let</span> ws = <span class="keyword">new</span> WebSocket(<span class="string">'ws://192.168.201.182:9001/pods/stdout/tails'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当打开连接时的操作</span></span><br><span class="line">ws.onopen = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 由于业务需求，要在打开时发送参数请求</span></span><br><span class="line">  ws.send(<span class="string">'something'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当关闭连接时的操作</span></span><br><span class="line"><span class="comment">// 注意：这里的关闭是指服务端关闭</span></span><br><span class="line"><span class="keyword">this</span>.ws.onclose = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 收到数据时的操作</span></span><br><span class="line"><span class="keyword">this</span>.ws.onmessage = <span class="function">(<span class="params">msg</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 收到错误时的操作</span></span><br><span class="line"><span class="keyword">this</span>.ws.onerror = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面注册的<code>ws</code>连接，有两个基础方法：</p>
+<ul>
+<li><p><code>ws.send()</code>：主动发送请求给后台，参数是一个字符串，格式自己定义。</p>
 </li>
-<li><p>斜线(/) 表示增长间隔，如第1个字段(minutes) 值是 3-59/15，表示每小时的第3分钟开始执行一次，之后每隔 15 分钟执行一次（即 3、18、33、48 这些时间点执行），这里也可以表示为：3/15</p>
+<li><p><code>ws.close()</code>：发送一个请求，告知后台要关闭连接，当收到响应时会出发<code>ws.onclose()</code>，此时这个WebSocket连接就已经关闭了。</p>
 </li>
-<li><p>逗号(,) 用于枚举值，如第6个字段值是 MON,WED,FRI，表示 星期一、三、五 执行</p>
+</ul>
+<p>同时<code>ws</code>有一个常用的基础方法<code>ws.readyState</code>，表示当前socket的连接状态：</p>
+<ul>
+<li><p>0 - 表示连接尚未建立。</p>
 </li>
-<li><p>连字号(-) 表示一个范围，如第3个字段的值为 9-17 表示 9am 到 5pm 直接每个小时（包括9和17）</p>
+<li><p>1 - 表示连接已建立，可以进行通信。</p>
 </li>
-<li><p>问号(?) 只用于日(Day of month)和星期(Day of week)，\表示不指定值，可以用于代替 *</p>
+<li><p>2 - 表示连接正在进行关闭（即前端触发<code>ws.close()</code>但还未收到响应）。</p>
+</li>
+<li><p>3 - 表示连接已经关闭或者连接不能打开。</p>
 </li>
 </ul>
 <p>END</p>
@@ -503,9 +456,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Golang/" rel="tag"><i class="fa fa-tag"></i> Golang</a>
-          
-            <a href="/tags/第三方包/" rel="tag"><i class="fa fa-tag"></i> 第三方包</a>
+            <a href="/tags/JavaScript/" rel="tag"><i class="fa fa-tag"></i> JavaScript</a>
           
         </div>
       
@@ -518,8 +469,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/13/MySQL8-error_2059/" rel="next" title="MySQL8-error_2059">
-                <i class="fa fa-chevron-left"></i> MySQL8-error_2059
+              <a href="/2018/06/30/Golang-信号处理/" rel="next" title="Golang-信号处理">
+                <i class="fa fa-chevron-left"></i> Golang-信号处理
               </a>
             
           </div>
@@ -527,10 +478,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/30/Golang-信号处理/" rel="prev" title="Golang-信号处理">
-                Golang-信号处理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -610,17 +557,8 @@ var jiathis_config={
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -784,22 +722,6 @@ var jiathis_config={
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cron包"><span class="nav-number">1.</span> <span class="nav-text">cron包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#格式"><span class="nav-number">3.</span> <span class="nav-text">格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础格式"><span class="nav-number">3.1.</span> <span class="nav-text">基础格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊字符"><span class="nav-number">3.2.</span> <span class="nav-text">特殊字符</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
