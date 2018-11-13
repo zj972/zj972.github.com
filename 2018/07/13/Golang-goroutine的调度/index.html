@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="Sarbo&#39;s blog">
 <meta property="og:description" content="谈及这个话题，最初的出发点是朋友问我：“goroutine的调度是抢占式的还是非抢占式的”？所以就有了以下的总结。 什么是goroutine要知道什么是goroutine，那么就要对以下几个定义有所了解：  进程（Process）：在内存中的程序。有自己独立的独占的虚拟 CPU 、虚拟的 Memory、虚拟的 IO devices。  线程（Thread）：轻量级进程。在现代操作系统中，是进程中程">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-13T03:39:55.513Z">
+<meta property="og:updated_time" content="2018-11-13T03:43:47.765Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Golang-goroutine的调度">
 <meta name="twitter:description" content="谈及这个话题，最初的出发点是朋友问我：“goroutine的调度是抢占式的还是非抢占式的”？所以就有了以下的总结。 什么是goroutine要知道什么是goroutine，那么就要对以下几个定义有所了解：  进程（Process）：在内存中的程序。有自己独立的独占的虚拟 CPU 、虚拟的 Memory、虚拟的 IO devices。  线程（Thread）：轻量级进程。在现代操作系统中，是进程中程">
@@ -433,8 +433,10 @@
 <h3 id="“抢占式”调度（Go-1-2）"><a href="#“抢占式”调度（Go-1-2）" class="headerlink" title="“抢占式”调度（Go 1.2）"></a>“抢占式”调度（Go 1.2）</h3><p>这个抢占式调度的原理则是在每个函数或方法的入口，加上一段额外的代码，让runtime有机会检查是否需要执行抢占调度。这种解决方案只能说局部解决了“饿死”问题，对于没有函数调用，纯算法循环计算的G，scheduler依然无法抢占。</p>
 <p>e.g：</p>
 <figure class="highlight golang"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">  <span class="string">"fmt"</span></span><br><span class="line">  <span class="string">"runtime"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">// 设置为只有一个P</span></span><br><span class="line">  runtime.GOMAXPROCS(<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">      fmt.Println(<span class="string">"hello world"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;()</span><br><span class="line">  <span class="comment">// 由于没有函数方法调用，P只会堵死在这个G上，而上一个G会被“饿死”。</span></span><br><span class="line">  <span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">for</span> &#123;</span><br><span class="line">      <span class="comment">//fmt.Println("hello")</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">select</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p>1.<a href="https://tonybai.com/2017/06/23/an-intro-about-goroutine-scheduler/" target="_blank" rel="noopener">goroutine的调度</a><br>2.<a href="https://dave.cheney.net/2014/06/07/five-things-that-make-go-fast" target="_blank" rel="noopener">five-things-that-make-go-fast</a></p>
+<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p>1.<a href="https://tonybai.com/2017/06/23/an-intro-about-goroutine-scheduler/" target="_blank" rel="noopener">goroutine的调度</a></p>
+<p>2.<a href="https://dave.cheney.net/2014/06/07/five-things-that-make-go-fast" target="_blank" rel="noopener">five-things-that-make-go-fast</a></p>
 <h2 id="结论："><a href="#结论：" class="headerlink" title="结论："></a>结论：</h2><p>根据参考文章，可以知道goroutine的调度是基于G-P-M模型的，他本身就是一种非抢占式调度。文章中提到Go 1.2的版本优化，通过runtime检查执行抢占，实现了“抢占调度”，但仍然会有无法运行runtime检查的情况（即文章中提到的各种阻塞）。综上所述，goroutine是非抢占式的，通过协作来进行调度。</p>
+<p>END</p>
 
       
     </div>
