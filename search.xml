@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Golang-goroutine的调度]]></title>
+    <url>%2F2018%2F07%2F13%2FGolang-goroutine%E7%9A%84%E8%B0%83%E5%BA%A6%2F</url>
+    <content type="text"><![CDATA[谈及这个话题，最初的出发点是朋友问我：“goroutine的调度是抢占式的还是非抢占式的”？所以就有了以下的总结。 什么是goroutine要知道什么是goroutine，那么就要对以下几个定义有所了解： 进程（Process）：在内存中的程序。有自己独立的独占的虚拟 CPU 、虚拟的 Memory、虚拟的 IO devices。 线程（Thread）：轻量级进程。在现代操作系统中，是进程中程序执行流的最小单元。一个标准的线程由线程ID，当前指令指针(PC），寄存器集合和堆栈组成。 协程（coroutine/fiber）：轻量级线程。 是可以并发执行的函数，由编译或用户指定位置将控制权交给协程调度程序执行的方式。它是非抢占式的，可以避免反复系统调用，还有进程切换造成的开销，给你上几千个逻辑流，也称用户级别线程。 而goroutine，可以认为是协程的go语言实现，也可以说是轻量级线程(即协程coroutine），但作者Rob Pike并不这么说：“一个Goroutine是一个与其他goroutines 并发运行在同一地址空间的Go函数或方法。一个运行的程序由一个或更多个goroutine组成。它与线程、协程、进程等不同。它是一个goroutine。” 抢占式和非抢占式非抢占式（Nonpreemptive）让进程运行直到结束或阻塞的调度方式，容易实现，适合专用系统，不适合通用系统 抢占式（Preemptive）允许将逻辑上可继续运行的在运行过程暂停的调度方式，可防止单一进程长时间独占CPU，系统开销大 goroutine的进化史G-M模型（Go 1.0）在这个调度器中，每个goroutine对应于runtime中的一个抽象结构：G，而os thread作为“物理CPU”的存在而被抽象为一个结构：M(machine)。 G-P-M模型（Go 1.1）P是一个“逻辑Proccessor”，每个G要想真正运行起来，首先需要被分配一个P（进入到P的local runq中，这里暂忽略global runq那个环节）。对于G来说，P就是运行它的“CPU”，可以说：G的眼里只有P。但从Go scheduler视角来看，真正的“CPU”是M，只有将P和M绑定才能让P的runq中G得以真实运行起来。这样的P与M的关系，就好比Linux操作系统调度层面用户线程(user thread)与核心线程(kernel thread)的对应关系那样(N x M)。 “抢占式”调度（Go 1.2）这个抢占式调度的原理则是在每个函数或方法的入口，加上一段额外的代码，让runtime有机会检查是否需要执行抢占调度。这种解决方案只能说局部解决了“饿死”问题，对于没有函数调用，纯算法循环计算的G，scheduler依然无法抢占。 e.g： package mainimport ( "fmt" "runtime")func main() &#123; // 设置为只有一个P runtime.GOMAXPROCS(1) go func() &#123; for &#123; fmt.Println("hello world") &#125; &#125;() // 由于没有函数方法调用，P只会堵死在这个G上，而上一个G会被“饿死”。 go func() &#123; for &#123; //fmt.Println("hello") &#125; &#125;() select &#123;&#125;&#125; 参考链接：1.goroutine的调度2.five-things-that-make-go-fast 结论：根据参考文章，可以知道goroutine的调度是基于G-P-M模型的，他本身就是一种非抢占式调度。文章中提到Go 1.2的版本优化，通过runtime检查执行抢占，实现了“抢占调度”，但仍然会有无法运行runtime检查的情况（即文章中提到的各种阻塞）。综上所述，goroutine是非抢占式的，通过协作来进行调度。]]></content>
+      <categories>
+        <category>编程人生</category>
+      </categories>
+      <tags>
+        <tag>Golang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Web前端-WebSocket]]></title>
     <url>%2F2018%2F07%2F08%2FWeb%E5%89%8D%E7%AB%AF-WebSocket%2F</url>
     <content type="text"><![CDATA[之前做前端大部分请求都是普通的HTTP请求，并没有接触过WebSocket，最近在做一个日志展示，需要实时输出，所以就用到了WebSocket，这里主要记录一下前端，也就是客户端的操作。 // 打开一个WebSocket连接let ws = new WebSocket('ws://192.168.201.182:9001/pods/stdout/tails')// 当打开连接时的操作ws.onopen = () =&gt; &#123; // 由于业务需求，要在打开时发送参数请求 ws.send('something')&#125;// 当关闭连接时的操作// 注意：这里的关闭是指服务端关闭this.ws.onclose = () =&gt; &#123; // do something&#125;// 收到数据时的操作this.ws.onmessage = (msg) =&gt; &#123; // do something&#125;// 收到错误时的操作this.ws.onerror = (e) =&gt; &#123; // do something&#125; 上面注册的ws连接，有两个基础方法： ws.send()：主动发送请求给后台，参数是一个字符串，格式自己定义。 ws.close()：发送一个请求，告知后台要关闭连接，当收到响应时会出发ws.onclose()，此时这个WebSocket连接就已经关闭了。 同时ws有一个常用的基础方法ws.readyState，表示当前socket的连接状态： 0 - 表示连接尚未建立。 1 - 表示连接已建立，可以进行通信。 2 - 表示连接正在进行关闭（即前端触发ws.close()但还未收到响应）。 3 - 表示连接已经关闭或者连接不能打开。 END]]></content>
@@ -185,8 +196,8 @@
         <category>编程人生</category>
       </categories>
       <tags>
-        <tag>Beego</tag>
         <tag>Golang</tag>
+        <tag>Beego</tag>
       </tags>
   </entry>
   <entry>
